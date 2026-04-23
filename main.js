@@ -254,6 +254,29 @@ setTimeout(() => {
   Composite.add(engine.world, mc);
   render.mouse = mouse;
 
+  // ── Fix Scroll Getting Stuck ───────────────────────────
+  // Matter.js by default calls preventDefault on mouse and touch events
+  // which stops the page from scrolling when the cursor is over the canvas.
+
+  // 1. Remove mouse wheel events to allow desktop scrolling
+  mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
+  mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+
+  // 2. Adjust touch events to allow mobile scrolling UNLESS dragging a card
+  mouse.element.removeEventListener("touchstart", mouse.mousedown);
+  mouse.element.removeEventListener("touchmove", mouse.mousemove);
+  mouse.element.removeEventListener("touchend", mouse.mouseup);
+
+  mouse.element.addEventListener("touchstart", mouse.mousedown, { passive: true });
+  mouse.element.addEventListener("touchmove", (e) => {
+    if (mc.body) {
+      // Only prevent default (stop scrolling) if we are holding a physics card
+      e.preventDefault();
+    }
+    mouse.mousemove(e);
+  });
+  mouse.element.addEventListener("touchend", mouse.mouseup, { passive: true });
+
   // ── Start engine and renderer ──────────────────────────
   Runner.run(Runner.create(), engine);
   Render.run(render);
