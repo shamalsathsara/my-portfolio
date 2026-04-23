@@ -458,7 +458,9 @@ button { cursor: pointer; font-family: inherit; }
   justify-content: center;
   flex-wrap: wrap;
   animation: fadeSlideDown 0.7s ease 0.36s both;
-  pointer-events: auto;
+  pointer-events: auto;   /* Must be clickable despite hero-content having none */
+  position: relative;     /* Required for z-index to take effect */
+  z-index: 10;            /* Higher than physics canvas (z-index: 5) */
 }
 
 /* Location label */
@@ -471,6 +473,8 @@ button { cursor: pointer; font-family: inherit; }
   color: var(--text-muted);
   animation: fadeSlideDown 0.7s ease 0.48s both;
   pointer-events: auto;
+  position: relative;
+  z-index: 10;            /* Above physics canvas */
 }
 
 @keyframes fadeSlideDown {
