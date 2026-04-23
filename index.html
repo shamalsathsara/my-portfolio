@@ -90,7 +90,7 @@
   ═════════════════════════════════ -->
   <section id="hero" aria-label="Hero introduction">
 
-    <!-- Static centered text (sits behind physics layer) -->
+    <!-- Static centered text (badge, name, typing) -->
     <div class="hero-content">
       <!-- Status badge -->
       <div class="hero-badge">
@@ -107,21 +107,26 @@
       <p class="hero-typed" aria-live="polite">
         <span id="typed-text"></span><span class="cursor" aria-hidden="true"></span>
       </p>
+    </div><!-- /.hero-content -->
 
+    <!--
+      CTA buttons and location are in a SEPARATE div outside hero-content.
+      This gives them their own stacking order above the physics canvas
+      without being trapped inside a lower z-index stacking context.
+    -->
+    <div class="hero-actions">
       <!-- CTA buttons -->
       <div class="hero-btns">
         <a href="#projects" class="btn-gold" id="btn-see-work">
-          <!-- Arrow right icon -->
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5" aria-hidden="true">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
           See My Work
         </a>
         <a href="#contact" class="btn-outline" id="btn-contact">
-          <!-- Mail icon -->
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
             <polyline points="22,6 12,13 2,6" />
           </svg>
@@ -131,9 +136,9 @@
 
       <!-- Location tag -->
       <p class="hero-loc">
-        <span aria-hidden="true">🇱🇰</span> 349/07/A Palanwatta,Pannipitiya
+        <span aria-hidden="true">🇱🇰</span> 349/07/A Palanwatta, Pannipitiya
       </p>
-    </div><!-- /.hero-content -->
+    </div><!-- /.hero-actions -->
 
     <!-- ── Physics drop elements ──────────────────
          Each .phys-el is a real DOM element whose CSS
@@ -150,7 +155,7 @@
       <div class="phys-el phys-pill" id="p-linux">🐧 Linux</div>
       <!-- Stat cards -->
       <div class="phys-el phys-stat" id="p-s1">
-        <div class="s-num">3+</div>
+        <div class="s-num">4+</div>
         <div class="s-lbl">Projects</div>
       </div>
       <div class="phys-el phys-stat" id="p-s2">
