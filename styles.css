@@ -22,11 +22,11 @@
   --bg-card:    rgba(16, 16, 30, 0.82); /* Glassmorphism card surface */
 
   /* ── Brand Accents ── */
-  --gold:       #c9a84c;          /* Rich warm gold — primary      */
-  --gold-light: #e8c46a;          /* Lighter gold for hover states */
-  --gold-dim:   rgba(201, 168, 76, 0.12); /* Gold tinted background  */
-  --blue:       #4a7cdc;          /* Electric blue — secondary     */
-  --blue-dim:   rgba(74, 124, 220, 0.12);
+  --gold:       #4d80ff;          /* Electric blue — primary       */
+  --gold-light: #7dabff;          /* Lighter blue for hover states */
+  --gold-dim:   rgba(77, 128, 255, 0.12); /* Blue tinted background  */
+  --blue:       #8b5cf6;          /* Violet — secondary accent     */
+  --blue-dim:   rgba(139, 92, 246, 0.14);
 
   /* ── Text ── */
   --text-h:     #f5f5fa;          /* Headings                      */
@@ -34,10 +34,10 @@
   --text-muted: #5e5e78;          /* Captions, labels              */
 
   /* ── Borders & Glow ── */
-  --border:     rgba(201, 168, 76, 0.10); /* Subtle gold border     */
-  --border-mid: rgba(201, 168, 76, 0.22); /* Hover border           */
-  --glow-gold:  0 0 40px rgba(201, 168, 76, 0.18);
-  --glow-blue:  0 0 40px rgba(74, 124, 220, 0.18);
+  --border:     rgba(77, 128, 255, 0.10);  /* Subtle blue border     */
+  --border-mid: rgba(77, 128, 255, 0.28);  /* Hover border           */
+  --glow-gold:  0 0 40px rgba(77, 128, 255, 0.22);
+  --glow-blue:  0 0 40px rgba(139, 92, 246, 0.22);
 
   /* ── Spacing / Shape ── */
   --section-pad: 110px 0;
@@ -89,7 +89,7 @@ button { cursor: pointer; font-family: inherit; }
   padding: 0 24px;
 }
 
-/* Gold gradient text */
+/* Blue gradient text */
 .gold-text {
   background: linear-gradient(120deg, var(--gold-light) 0%, var(--gold) 60%);
   -webkit-background-clip: text;
@@ -201,7 +201,7 @@ button { cursor: pointer; font-family: inherit; }
 }
 .orb-1 {
   width: 700px; height: 700px;
-  background: radial-gradient(circle, var(--gold), transparent 70%);
+  background: radial-gradient(circle, #3b6fd4, transparent 70%);
   top: -250px; left: -200px;
   animation-duration: 20s;
 }
@@ -214,7 +214,7 @@ button { cursor: pointer; font-family: inherit; }
 }
 .orb-3 {
   width: 400px; height: 400px;
-  background: radial-gradient(circle, var(--gold), transparent 70%);
+  background: radial-gradient(circle, #2a5fcc, transparent 70%);
   bottom: -100px; left: 25%;
   animation-duration: 30s;
   animation-delay: -5s;
@@ -577,8 +577,8 @@ button { cursor: pointer; font-family: inherit; }
   position: relative;
   border-radius: var(--r-xl);
   overflow: hidden;
-  /* Gold gradient border using box-shadow */
-  box-shadow: 0 0 0 3px var(--gold), 0 0 0 6px rgba(201,168,76,0.12), var(--glow-gold);
+  /* Blue gradient border using box-shadow */
+  box-shadow: 0 0 0 3px var(--gold), 0 0 0 6px rgba(77,128,255,0.14), var(--glow-gold);
 }
 .photo-frame img {
   width: 100%; height: auto;
@@ -648,7 +648,7 @@ button { cursor: pointer; font-family: inherit; }
 }
 .chip:hover {
   border-color: var(--gold);
-  background: rgba(201,168,76,0.18);
+  background: rgba(77,128,255,0.18);
   color: var(--gold);
 }
 
