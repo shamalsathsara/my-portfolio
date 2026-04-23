@@ -757,7 +757,9 @@ button { cursor: pointer; font-family: inherit; }
 
 .proj-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* auto-fit: fills as many columns as fit at min 300px wide.
+     So 4 cards → 2×2 on medium screens, 4-in-a-row on wide screens. */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
 }
 
@@ -1054,7 +1056,6 @@ footer {
   .photo-frame    { max-width: 400px; margin: 0 auto; }
   .photo-badge    { bottom: -12px; right: 0px; }
 
-  .proj-grid      { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
   .cr-grid        { grid-template-columns: 1fr; }
 
   .contact-grid          { grid-template-columns: repeat(2, 1fr); }
