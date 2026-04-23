@@ -245,7 +245,7 @@ button { cursor: pointer; font-family: inherit; }
 .nav-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -1083,6 +1083,8 @@ footer {
 /* ── Mobile (< 768px) — hamburger kicks in ── */
 @media (max-width: 768px) {
   :root { --section-pad: 72px 0; }
+  
+  .nav-inner { justify-content: flex-end; }
 
   /* Swap nav to mobile */
   .nav-links { display: none; }
