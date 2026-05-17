@@ -799,6 +799,34 @@ button { cursor: pointer; font-family: inherit; }
 }
 .pc-head small { font-size: 0.78rem; color: var(--text-muted); }
 
+/* "In Development" badge */
+.wip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: rgba(34, 197, 94, 0.10);
+  border: 1px solid rgba(34, 197, 94, 0.30);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #4ade80;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.wip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+  animation: blink-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
 .pc-body { padding: 20px 28px 24px; }
 .pc-desc {
   font-size: 0.88rem;
