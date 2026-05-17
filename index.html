@@ -24,8 +24,7 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- Matter.js physics library (must load before main.js) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
 </head>
 
 <body>
@@ -83,9 +82,6 @@
 
   <!-- ════════════════════════════════
        HERO SECTION
-       Full-viewport intro with physics card drop.
-       Cards fall from above on page load.
-       User can grab and throw them with mouse.
   ═════════════════════════════════ -->
   <section id="hero" aria-label="Hero introduction">
 
@@ -104,24 +100,19 @@
       </p>
     </div><!-- /.hero-content -->
 
-    <!--
-      CTA buttons and location are in a SEPARATE div outside hero-content.
-      This gives them their own stacking order above the physics canvas
-      without being trapped inside a lower z-index stacking context.
-    -->
     <div class="hero-actions">
       <!-- CTA buttons -->
       <div class="hero-btns">
         <a href="#projects" class="btn-gold" id="btn-see-work">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            aria-hidden="true">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
           See My Work
         </a>
         <a href="#contact" class="btn-outline" id="btn-contact">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
             <polyline points="22,6 12,13 2,6" />
           </svg>
@@ -129,39 +120,36 @@
         </a>
       </div>
 
+      <!-- Professional stats row -->
+      <div class="hero-stats" aria-label="Quick stats">
+        <div class="hs-item">
+          <span class="hs-num">7+</span>
+          <span class="hs-lbl">Projects</span>
+        </div>
+        <div class="hs-sep" aria-hidden="true"></div>
+        <div class="hs-item">
+          <span class="hs-num">3+</span>
+          <span class="hs-lbl">Years Coding</span>
+        </div>
+        <div class="hs-sep" aria-hidden="true"></div>
+        <div class="hs-item">
+          <span class="hs-num">5</span>
+          <span class="hs-lbl">Tech Stacks</span>
+        </div>
+        <div class="hs-sep" aria-hidden="true"></div>
+        <div class="hs-item">
+          <span class="hs-num">95%</span>
+          <span class="hs-lbl">ML Accuracy</span>
+        </div>
+      </div>
+
       <!-- Location tag -->
       <p class="hero-loc">
-        <span aria-hidden="true">🇱🇰</span> 349/07/A Palanwatta, Pannipitiya
+        <span aria-hidden="true">🇱🇰</span> Pannipitiya, Sri Lanka
       </p>
     </div><!-- /.hero-actions -->
 
-    <!-- ── Physics drop elements ──────────────────
-         Each .phys-el is a real DOM element whose CSS
-         transform is updated per-frame by Matter.js.
-         They start above the viewport and fall down.
-    ──────────────────────────────────────────── -->
-    <div id="physics-world" aria-hidden="true">
-      <!-- Skill pills -->
-      <div class="phys-el phys-pill" id="p-node">⚡ Node.js</div>
-      <div class="phys-el phys-pill" id="p-react">⚛️ React</div>
-      <div class="phys-el phys-pill" id="p-php">🐘 PHP</div>
-      <div class="phys-el phys-pill" id="p-mern">🔥 MERN</div>
-      <div class="phys-el phys-pill" id="p-mysql">🗄️ MySQL</div>
-      <div class="phys-el phys-pill" id="p-linux">🐧 Linux</div>
-      <!-- Stat cards -->
-      <div class="phys-el phys-stat" id="p-s1">
-        <div class="s-num">4+</div>
-        <div class="s-lbl">Projects</div>
-      </div>
-      <div class="phys-el phys-stat" id="p-s2">
-        <div class="s-num">GTX</div>
-        <div class="s-lbl">1660 Ti</div>
-      </div>
-      <div class="phys-el phys-stat" id="p-s3">
-        <div class="s-num">24/7</div>
-        <div class="s-lbl">Coding</div>
-      </div>
-    </div><!-- /#physics-world -->
+
 
     <!-- Animated scroll indicator -->
     <div class="scroll-hint" aria-hidden="true">
@@ -410,6 +398,38 @@
           </div>
         </div><!-- /.sk-card Tools -->
 
+        <!-- Machine Learning / AI -->
+        <div class="sk-card reveal d4">
+          <div class="sk-head">
+            <div class="sk-icon sk-icon-green">🤖</div>
+            <h3>ML / AI</h3>
+          </div>
+          <div class="sk-bar">
+            <div class="sk-bar-top"><span>Python</span><span class="pct">85%</span></div>
+            <div class="sk-bar-track">
+              <div class="sk-fill green-fill" data-pct="85"></div>
+            </div>
+          </div>
+          <div class="sk-bar">
+            <div class="sk-bar-top"><span>scikit-learn</span><span class="pct">80%</span></div>
+            <div class="sk-bar-track">
+              <div class="sk-fill green-fill" data-pct="80"></div>
+            </div>
+          </div>
+          <div class="sk-bar">
+            <div class="sk-bar-top"><span>Pandas</span><span class="pct">78%</span></div>
+            <div class="sk-bar-track">
+              <div class="sk-fill green-fill" data-pct="78"></div>
+            </div>
+          </div>
+          <div class="sk-bar">
+            <div class="sk-bar-top"><span>Matplotlib</span><span class="pct">72%</span></div>
+            <div class="sk-bar-track">
+              <div class="sk-fill green-fill" data-pct="72"></div>
+            </div>
+          </div>
+        </div><!-- /.sk-card ML/AI -->
+
       </div><!-- /.skills-grid -->
     </div><!-- /.container -->
   </section><!-- /#skills -->
@@ -467,11 +487,11 @@
           </div>
         </article>
 
-        <!-- ── Project: Togetherwise ── -->
-        <article class="proj-card reveal d1" aria-label="Togetherwise project">
+        <!-- ── Project: TogetherweRise ── -->
+        <article class="proj-card reveal d1" aria-label="TogetherweRise project">
           <div class="pc-head pc-g2">
             <span class="pc-emoji" aria-hidden="true">🤝</span>
-            <h3>Togetherwise</h3>
+            <h3>TogetherweRise</h3>
             <small>MERN Fundraising Platform</small>
           </div>
           <div class="pc-body">
@@ -549,11 +569,112 @@
               <span class="tpill tp-green">Pygame</span>
             </div>
             <div class="pc-links">
-              <a href="https://github.com/shamalsathsara/Dragon-Animation-Python-"
-                 target="_blank" rel="noopener noreferrer"
-                 class="gh-link" aria-label="Dragon Animation on GitHub">
+              <a href="https://github.com/shamalsathsara/Dragon-Animation-Python-" target="_blank"
+                rel="noopener noreferrer" class="gh-link" aria-label="Dragon Animation on GitHub">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── Project: PC Hardware Bottleneck Analyzer ── -->
+        <article class="proj-card reveal d0" aria-label="PC Hardware Bottleneck Analyzer project">
+          <div class="pc-head pc-g2">
+            <span class="pc-emoji" aria-hidden="true">🖥️</span>
+            <h3>PC Bottleneck Analyzer</h3>
+            <small>ML-Powered Full-Stack Tool</small>
+          </div>
+          <div class="pc-body">
+            <p class="pc-desc">
+              A decoupled full-stack app that replaces static calculators with dynamic
+              <strong>machine learning</strong>. Trained a <strong>Random Forest Regressor</strong>
+              (.joblib) via a Python REST API to predict gaming performance with over
+              <strong>95% accuracy</strong>, with algorithm-driven upgrade path recommendations.
+            </p>
+            <div class="tech-row" aria-label="Technologies used">
+              <span class="tpill tp-gold">Python</span>
+              <span class="tpill tp-gold">scikit-learn</span>
+              <span class="tpill tp-blue">REST API</span>
+              <span class="tpill tp-blue">JavaScript</span>
+              <span class="tpill tp-green">Machine Learning</span>
+            </div>
+            <div class="pc-links">
+              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link"
+                aria-label="PC Bottleneck Analyzer on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── Project: Packman Game ── -->
+        <article class="proj-card reveal d1" aria-label="Packman Game project">
+          <div class="pc-head pc-g3">
+            <span class="pc-emoji" aria-hidden="true">👾</span>
+            <h3>Packman Game</h3>
+            <small>Java University Project</small>
+          </div>
+          <div class="pc-body">
+            <p class="pc-desc">
+              A fully playable <strong>Pac-Man</strong> style arcade game built in
+              <strong>Java</strong> as a university project. Features classic ghost AI,
+              score tracking, and smooth game-loop logic — built for both entertainment
+              and demonstrating OOP fundamentals.
+            </p>
+            <div class="tech-row" aria-label="Technologies used">
+              <span class="tpill tp-gold">Java</span>
+              <span class="tpill tp-blue">Swing / AWT</span>
+              <span class="tpill tp-green">Game Loop</span>
+              <span class="tpill tp-green">OOP</span>
+            </div>
+            <div class="pc-links">
+              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link"
+                aria-label="Packman Game on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                View on GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── Project: Food Nutrition App ── -->
+        <article class="proj-card reveal d2" aria-label="Food Nutrition App project">
+          <div class="pc-head pc-g1">
+            <span class="pc-emoji" aria-hidden="true">🍛</span>
+            <h3>Food Nutrition App</h3>
+            <small>Flutter · TensorFlow Lite</small>
+          </div>
+          <div class="pc-body">
+            <p class="pc-desc">
+              An offline-first <strong>Flutter</strong> mobile app using a custom-trained
+              <strong>TensorFlow Lite</strong> computer vision model to instantly recognise
+              traditional Sri Lankan foods. Processes images on-device for real-time
+              nutritional data, regional origins, and estimated pricing.
+            </p>
+            <div class="tech-row" aria-label="Technologies used">
+              <span class="tpill tp-blue">Flutter</span>
+              <span class="tpill tp-blue">Dart</span>
+              <span class="tpill tp-gold">TensorFlow Lite</span>
+              <span class="tpill tp-gold">Computer Vision</span>
+              <span class="tpill tp-green">Offline-First</span>
+            </div>
+            <div class="pc-links">
+              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link"
+                aria-label="Food Nutrition App on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
                 </svg>
                 View on GitHub
               </a>
@@ -769,9 +890,9 @@
   <footer>
     <div class="container">
       <div class="footer-inner">
-        <a href="#hero" class="footer-logo" aria-label="Back to top">S.</a>
+
         <p class="footer-copy">
-          &copy; 2026 Shamal Sathsara &mdash; Built with ❤️ in Sri Lanka
+          &copy; 2026 Shamal Sathsara
         </p>
         <nav class="footer-links" aria-label="Footer links">
           <a href="#about">About</a>

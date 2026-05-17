@@ -5,8 +5,7 @@
      2. Typing effect — hero subtitle
      3. Scroll reveal — IntersectionObserver
      4. Skill bar animation — triggered on scroll
-     5. Matter.js physics hero — falling cards
-     6. Active nav link highlight
+     5. Active nav link highlight
    ============================================================ */
 
 /* ────────────────────────────────────────────────────────────
@@ -153,168 +152,14 @@ const barObserver = new IntersectionObserver(
 document.querySelectorAll('.sk-fill').forEach(bar => barObserver.observe(bar));
 
 
-/* ────────────────────────────────────────────────────────────
-   5. MATTER.JS PHYSICS HERO
-   Cards and skill pills spawn above the viewport and fall
-   into the hero section. The user can grab + throw them.
-────────────────────────────────────────────────────────────── */
-
-// ── Destructure the modules we need ──────────────────────
-const {
-  Engine, Render, Runner,
-  Bodies, Composite,
-  Mouse, MouseConstraint,
-  Events
-} = Matter;
-
-// ── Create engine ─────────────────────────────────────────
-const engine = Engine.create();
-engine.gravity.y = 1.3;   // Slightly heavier gravity for a punchy feel
-
-// ── Set up transparent canvas ────────────────────────────
-// The canvas captures mouse events for physics drag, but is
-// visually invisible so only the HTML elements are seen.
-const heroEl = document.getElementById('hero');
-
-const render = Render.create({
-  element: heroEl,
-  engine,
-  options: {
-    width:      heroEl.offsetWidth,
-    height:     heroEl.offsetHeight,
-    wireframes: false,
-    background: 'transparent'   // Let the HTML show through
-  }
-});
-
-// Mark canvas with id (for CSS targeting) and make it invisible
-render.canvas.id = 'hero-canvas';
-render.canvas.style.opacity = '0';
-
-// ── Boundary walls ────────────────────────────────────────
-// Static bodies that keep physics elements inside the hero.
-let floor, leftWall, rightWall;
-const wallOpts = { isStatic: true, render: { visible: false } };
-
-/**
- * Builds/rebuilds boundary rectangles around the hero section.
- * Called on init and every time the window is resized.
- */
-function buildWalls() {
-  const w = heroEl.offsetWidth;
-  const h = heroEl.offsetHeight;
-  const t = 60;  // Wall thickness
-
-  // Remove old walls first (if rebuilding after a resize)
-  if (floor) Composite.remove(engine.world, [floor, leftWall, rightWall]);
-
-  floor     = Bodies.rectangle(w / 2, h + t / 2, w * 2, t, wallOpts);
-  leftWall  = Bodies.rectangle(-t / 2, h / 2, t, h * 2, wallOpts);
-  rightWall = Bodies.rectangle(w + t / 2, h / 2, t, h * 2, wallOpts);
-
-  Composite.add(engine.world, [floor, leftWall, rightWall]);
-}
-buildWalls();
-
-// ── Create physics bodies for each DOM card ───────────────
-const physEls   = document.querySelectorAll('.phys-el');
-const domBodies = [];   // Array of { dom, body, w, h } pairs
-
-setTimeout(() => {
-  // Wait 650ms so the browser has measured all element sizes
-  physEls.forEach((el, i) => {
-    const rect = el.getBoundingClientRect();
-    const w    = rect.width;
-    const h    = rect.height;
-
-    // Spread start positions horizontally across the hero width
-    const startX = (heroEl.offsetWidth * 0.2) + (Math.random() * heroEl.offsetWidth * 0.6);
-    const startY = -80 - (i * 85);  // Each card spawns higher than the previous
-
-    // Create a physics rectangle matching the DOM element's size
-    const body = Bodies.rectangle(startX, startY, w, h, {
-      restitution: 0.6,     // How bouncy the card is
-      friction:    0.12,
-      frictionAir: 0.012,   // Gentle air drag
-      chamfer: { radius: 8 }, // Rounded corners to match CSS border-radius
-      render: { visible: false }
-    });
-
-    domBodies.push({ dom: el, body, w, h });
-    Composite.add(engine.world, body);
-  });
-
-  // ── Mouse drag constraint ──────────────────────────────
-  // Lets the user click and throw the physics cards around.
-  const mouse = Mouse.create(render.canvas);
-  const mc    = MouseConstraint.create(engine, {
-    mouse,
-    constraint: { stiffness: 0.2, render: { visible: false } }
-  });
-  Composite.add(engine.world, mc);
-  render.mouse = mouse;
-
-  // ── Fix Scroll Getting Stuck ───────────────────────────
-  // Matter.js by default calls preventDefault on mouse and touch events
-  // which stops the page from scrolling when the cursor is over the canvas.
-
-  // 1. Remove mouse wheel events to allow desktop scrolling
-  mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
-  mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
-
-  // 2. Adjust touch events to allow mobile scrolling UNLESS dragging a card
-  mouse.element.removeEventListener("touchstart", mouse.mousedown);
-  mouse.element.removeEventListener("touchmove", mouse.mousemove);
-  mouse.element.removeEventListener("touchend", mouse.mouseup);
-
-  mouse.element.addEventListener("touchstart", mouse.mousedown, { passive: true });
-  mouse.element.addEventListener("touchmove", (e) => {
-    if (mc.body) {
-      // Only prevent default (stop scrolling) if we are holding a physics card
-      e.preventDefault();
-    }
-    mouse.mousemove(e);
-  });
-  mouse.element.addEventListener("touchend", mouse.mouseup, { passive: true });
-
-  // ── Start engine and renderer ──────────────────────────
-  Runner.run(Runner.create(), engine);
-  Render.run(render);
-
-  // ── DOM sync loop ──────────────────────────────────────
-  /**
-   * Every physics tick: translate each DOM element to match
-   * its physics body's position and rotation.
-   *
-   * Matter.js positions by center-of-mass; CSS by top-left corner.
-   * Subtract half width/height to align them correctly.
-   */
-  Events.on(engine, 'afterUpdate', () => {
-    domBodies.forEach(({ dom, body, w, h }) => {
-      const x = body.position.x - w / 2;
-      const y = body.position.y - h / 2;
-      dom.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
-    });
-  });
-
-}, 650);  // 650ms gives the page time to fully paint before we measure elements
-
-// ── Window resize handler ─────────────────────────────────
-// Rebuilds boundary walls when the viewport changes size.
-window.addEventListener('resize', () => {
-  const w = heroEl.offsetWidth;
-  const h = heroEl.offsetHeight;
-  render.canvas.width  = w;
-  render.canvas.height = h;
-  buildWalls();
-});
 
 
 /* ────────────────────────────────────────────────────────────
-   6. ACTIVE NAV LINK HIGHLIGHT
+   5. ACTIVE NAV LINK HIGHLIGHT
    Uses IntersectionObserver to detect which section is
    in view and highlights the corresponding nav link.
 ────────────────────────────────────────────────────────────── */
+
 
 const sections   = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');

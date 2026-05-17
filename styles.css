@@ -370,15 +370,8 @@ button { cursor: pointer; font-family: inherit; }
   padding: 120px 24px 80px;
 }
 
-/* Invisible canvas for physics mouse events */
-#hero-canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: auto;
-}
 
-/* Static text — name, badge, typing (visually behind physics cards) */
+/* Static text block */
 .hero-content {
   position: relative;
   z-index: 3;
@@ -386,14 +379,10 @@ button { cursor: pointer; font-family: inherit; }
   max-width: 760px;
 }
 
-/*
-  Buttons and location live in a SEPARATE div, a direct sibling of the canvas.
-  Because they share the same stacking context (#hero), z-index: 10 genuinely
-  beats the canvas z-index: 5 — clicks reach the buttons correctly.
-*/
+/* CTA buttons + stats + location */
 .hero-actions {
   position: relative;
-  z-index: 10;                /* Above physics canvas (z-index: 5) */
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -472,9 +461,6 @@ button { cursor: pointer; font-family: inherit; }
   justify-content: center;
   flex-wrap: wrap;
   animation: fadeSlideDown 0.7s ease 0.36s both;
-  pointer-events: auto;   /* Must be clickable despite hero-content having none */
-  position: relative;     /* Required for z-index to take effect */
-  z-index: 10;            /* Higher than physics canvas (z-index: 5) */
 }
 
 /* Location label */
@@ -482,13 +468,55 @@ button { cursor: pointer; font-family: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 22px;
+  margin-top: 10px;
   font-size: 0.83rem;
   color: var(--text-muted);
-  animation: fadeSlideDown 0.7s ease 0.48s both;
-  pointer-events: auto;
-  position: relative;
-  z-index: 10;            /* Above physics canvas */
+  animation: fadeSlideDown 0.7s ease 0.62s both;
+}
+
+/* Professional stats row */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 32px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 18px 32px;
+  animation: fadeSlideDown 0.7s ease 0.50s both;
+}
+.hs-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 28px;
+}
+.hs-num {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  background: linear-gradient(120deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+.hs-lbl {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 5px;
+}
+.hs-sep {
+  width: 1px;
+  height: 36px;
+  background: var(--border-mid);
+  flex-shrink: 0;
 }
 
 @keyframes fadeSlideDown {
@@ -496,53 +524,6 @@ button { cursor: pointer; font-family: inherit; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Physics card container */
-#physics-world {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 4;
-}
-
-/* Shared physics card style */
-.phys-el {
-  position: absolute;
-  top: 0; left: 0;
-  border-radius: var(--r-md);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  will-change: transform;
-  user-select: none;
-  white-space: nowrap;
-}
-.phys-pill {
-  padding: 9px 17px;
-  background: rgba(201,168,76,0.07);
-  border-color: rgba(201,168,76,0.18);
-  color: var(--gold);
-  font-weight: 700;
-  font-size: 0.85rem;
-  font-family: 'Nunito Sans', sans-serif;
-}
-.phys-stat {
-  padding: 14px 18px;
-  background: rgba(12,12,24,0.9);
-  text-align: center;
-  min-width: 90px;
-}
-.phys-stat .s-num {
-  font-family: 'Raleway', sans-serif;
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: var(--gold);
-}
-.phys-stat .s-lbl {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  margin-top: 2px;
-  font-weight: 600;
-}
 
 /* Scroll hint arrow */
 .scroll-hint {
@@ -705,7 +686,7 @@ button { cursor: pointer; font-family: inherit; }
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
@@ -737,8 +718,9 @@ button { cursor: pointer; font-family: inherit; }
   font-size: 1.1rem;
   flex-shrink: 0;
 }
-.sk-icon.blue { background: var(--blue-dim); }
-.sk-head h3   { font-size: 0.9rem; font-weight: 700; color: var(--text-h); }
+.sk-icon.blue        { background: var(--blue-dim); }
+.sk-icon-green       { background: rgba(34,197,94,0.12); }
+.sk-head h3          { font-size: 0.9rem; font-weight: 700; color: var(--text-h); }
 
 /* Skill bar */
 .sk-bar { margin-bottom: 12px; }
@@ -765,6 +747,9 @@ button { cursor: pointer; font-family: inherit; }
 }
 .sk-fill.blue-fill {
   background: linear-gradient(90deg, var(--blue), #7aa8ff);
+}
+.sk-fill.green-fill {
+  background: linear-gradient(90deg, #16a34a, #4ade80);
 }
 
 /* ────────────────────────────────────────────────────────────
@@ -1076,6 +1061,9 @@ footer {
 
   .cr-grid        { grid-template-columns: 1fr; }
 
+  .hero-stats     { padding: 14px 20px; }
+  .hs-item        { padding: 0 18px; }
+
   .contact-grid          { grid-template-columns: repeat(2, 1fr); }
   .contact-grid.row2     { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
 }
@@ -1096,6 +1084,11 @@ footer {
 
   /* Hero buttons stacked on very small screens */
   .hero-btns { flex-direction: column; align-items: center; }
+
+  /* Stats row wraps on mobile */
+  .hero-stats { flex-wrap: wrap; gap: 12px 0; padding: 16px 14px; }
+  .hs-sep     { display: none; }
+  .hs-item    { padding: 6px 20px; width: 50%; }
 
   .skills-grid { grid-template-columns: 1fr; }
   .facts       { grid-template-columns: 1fr; }
