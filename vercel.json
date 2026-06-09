@@ -1,4 +1,5 @@
 {
+  "name": "shamal-sathsara",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
