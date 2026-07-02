@@ -21,36 +21,45 @@
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
 
+  <!-- Google Fonts: Space Grotesk + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css" />
-
-
 </head>
 
 <body>
 
   <!-- ════════════════════════════════
-       AMBIENT BACKGROUND ORBS
-       Floating blurred gradient blobs.
-       aria-hidden so screen readers skip them.
+       CUSTOM CURSOR
   ═════════════════════════════════ -->
-  <div class="bg-orbs" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+  <div class="cursor-outer" id="cursor-outer" aria-hidden="true"></div>
+  <div class="cursor-dot"   id="cursor-dot"   aria-hidden="true"></div>
+
+  <!-- ════════════════════════════════
+       SCROLL PROGRESS BAR
+  ═════════════════════════════════ -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ════════════════════════════════
+       ANIMATED MESH BACKGROUND
+  ═════════════════════════════════ -->
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="mesh-orb mo-1"></div>
+    <div class="mesh-orb mo-2"></div>
+    <div class="mesh-orb mo-3"></div>
+    <div class="grid-lines"></div>
   </div>
 
 
   <!-- ════════════════════════════════
        NAVBAR
-       Fixed top bar — darkens on scroll.
-       JS handles: .scrolled class, hamburger toggle.
   ═════════════════════════════════ -->
   <nav id="navbar" role="navigation" aria-label="Main navigation">
     <div class="container">
       <div class="nav-inner">
-
-        <!-- Brand logo — removed per user request -->
 
         <!-- Desktop navigation links -->
         <ul class="nav-links" id="nav-links" aria-label="Navigation">
@@ -58,15 +67,16 @@
           <li><a href="#skills">Skills</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#creative">Creative</a></li>
+          <li><a href="#certificates">Certificates</a></li>
           <li><a href="#contact" class="nav-hire">Hire Me</a></li>
         </ul>
 
-        <!-- Hamburger — shown only on mobile via CSS -->
+        <!-- Hamburger — shown only on mobile -->
         <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
 
-      </div><!-- /.nav-inner -->
+      </div>
 
       <!-- Mobile slide-down navigation -->
       <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
@@ -74,90 +84,136 @@
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
         <a href="#creative">Creative</a>
+        <a href="#certificates">Certificates</a>
         <a href="#contact">Hire Me</a>
       </nav>
-    </div><!-- /.container -->
+    </div>
   </nav>
 
-
   <!-- ════════════════════════════════
-       HERO SECTION
+       HERO SECTION — Split Layout
   ═════════════════════════════════ -->
   <section id="hero" aria-label="Hero introduction">
+    <div class="container">
+      <div class="hero-grid">
 
-    <!-- Static centered text (badge, name, typing) -->
-    <div class="hero-content">
-      <!-- Status badge removed per user request -->
+        <!-- ── Left: Text content ── -->
+        <div class="hero-left">
 
-      <!-- Name heading -->
-      <h1 class="hero-name">
-        Shamal <span class="gold-text">Sathsara</span>
-      </h1>
+          <!-- Available badge -->
+          <div class="hero-badge">
+            <span class="badge-dot" aria-hidden="true"></span>
+            Available for work
+          </div>
 
-      <!-- Typing animation subtitle -->
-      <p class="hero-typed" aria-live="polite">
-        <span id="typed-text"></span><span class="cursor" aria-hidden="true"></span>
-      </p>
-    </div><!-- /.hero-content -->
+          <!-- Name heading -->
+          <h1 class="hero-name">
+            Shamal <span class="violet-text">Sathsara</span>
+          </h1>
 
-    <div class="hero-actions">
-      <!-- CTA buttons -->
-      <div class="hero-btns">
-        <a href="assets/Shamal_Sathsara.pdf" download="Shamal_Sathsara.pdf" class="btn-gold btn-pulse" id="btn-download-cv">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" y1="15" x2="12" y2="3" />
-          </svg>
-          Download CV
-        </a>
-        <a href="#projects" class="btn-gold" id="btn-see-work">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-          See My Work
-        </a>
-        <a href="#contact" class="btn-outline" id="btn-contact">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            aria-hidden="true">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-          Contact Me
-        </a>
-      </div>
+          <!-- Typing animation subtitle -->
+          <p class="hero-typed" aria-live="polite">
+            <span id="typed-text"></span><span class="cursor" aria-hidden="true"></span>
+          </p>
 
-      <!-- Professional stats row -->
-      <div class="hero-stats" aria-label="Quick stats">
-        <div class="hs-item">
-          <span class="hs-num">7+</span>
-          <span class="hs-lbl">Projects</span>
-        </div>
-        <div class="hs-sep" aria-hidden="true"></div>
-        <div class="hs-item">
-          <span class="hs-num">3+</span>
-          <span class="hs-lbl">Years Coding</span>
-        </div>
-        <div class="hs-sep" aria-hidden="true"></div>
-        <div class="hs-item">
-          <span class="hs-num">5</span>
-          <span class="hs-lbl">Tech Stacks</span>
-        </div>
-        <div class="hs-sep" aria-hidden="true"></div>
-        <div class="hs-item">
-          <span class="hs-num">95%</span>
-          <span class="hs-lbl">ML Accuracy</span>
-        </div>
-      </div>
+          <!-- CTA buttons -->
+          <div class="hero-btns">
+            <a href="assets/Shamal_Sathsara.pdf" download="Shamal_Sathsara.pdf"
+              class="btn-primary btn-pulse" id="btn-download-cv">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Download CV
+            </a>
+            <a href="#projects" class="btn-outline" id="btn-see-work">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              See My Work
+            </a>
+            <a href="#contact" class="btn-ghost" id="btn-contact">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              Contact Me
+            </a>
+          </div>
 
-      <!-- Location tag -->
-      <p class="hero-loc">
-        <span aria-hidden="true">🇱🇰</span> Pannipitiya, Sri Lanka
-      </p>
-    </div><!-- /.hero-actions -->
+          <!-- Professional stats row -->
+          <div class="hero-stats" aria-label="Quick stats">
+            <div class="hs-item">
+              <span class="hs-num" data-count="7">0</span><span class="hs-num">+</span>
+              <span class="hs-lbl">Projects</span>
+            </div>
+            <div class="hs-sep" aria-hidden="true"></div>
+            <div class="hs-item">
+              <span class="hs-num" data-count="3">0</span><span class="hs-num">+</span>
+              <span class="hs-lbl">Years Coding</span>
+            </div>
+            <div class="hs-sep" aria-hidden="true"></div>
+            <div class="hs-item">
+              <span class="hs-num" data-count="5">0</span>
+              <span class="hs-lbl">Tech Stacks</span>
+            </div>
+            <div class="hs-sep" aria-hidden="true"></div>
+            <div class="hs-item">
+              <span class="hs-num" data-count="95">0</span><span class="hs-num">%</span>
+              <span class="hs-lbl">ML Accuracy</span>
+            </div>
+          </div>
 
+          <!-- Location tag -->
+          <p class="hero-loc">
+            <span aria-hidden="true">🇱🇰</span> Pannipitiya, Sri Lanka
+          </p>
+        </div><!-- /.hero-left -->
 
+        <!-- ── Right: Decorative code window ── -->
+        <div class="hero-right" aria-hidden="true">
+          <div class="code-window">
+            <div class="cw-header">
+              <div class="cw-dots">
+                <span class="cw-dot cd-red"></span>
+                <span class="cw-dot cd-yellow"></span>
+                <span class="cw-dot cd-green"></span>
+              </div>
+              <span class="cw-title">shamal.config.js</span>
+            </div>
+            <div class="cw-body">
+              <pre class="cw-code"><span class="cw-kw">const</span> <span class="cw-var">dev</span> = {
+  <span class="cw-prop">name</span>:      <span class="cw-str">"Shamal Sathsara"</span>,
+  <span class="cw-prop">role</span>:      <span class="cw-str">"Full-Stack Dev"</span>,
+  <span class="cw-prop">stack</span>: [
+    <span class="cw-str">"Node.js"</span>,  <span class="cw-str">"React"</span>,
+    <span class="cw-str">"PHP"</span>,      <span class="cw-str">"Python"</span>,
+    <span class="cw-str">"Flutter"</span>,  <span class="cw-str">"MySQL"</span>,
+  ],
+  <span class="cw-prop">location</span>: <span class="cw-str">"Sri Lanka 🇱🇰"</span>,
+  <span class="cw-prop">available</span>: <span class="cw-bool">true</span>,
+  <span class="cw-prop">passion</span>:  <span class="cw-str">"Building things"</span>,
+};
+
+<span class="cw-kw">export default</span> dev;</pre>
+            </div>
+          </div>
+
+          <!-- Floating tech badges -->
+          <div class="float-badge fb-1">
+            <span>🤖</span> WhatsApp Bot
+          </div>
+          <div class="float-badge fb-2">
+            <span>⚡</span> MERN Stack
+          </div>
+          <div class="float-badge fb-3">
+            <span>🧠</span> ML / AI
+          </div>
+        </div><!-- /.hero-right -->
+
+      </div><!-- /.hero-grid -->
+    </div><!-- /.container -->
 
     <!-- Animated scroll indicator -->
     <div class="scroll-hint" aria-hidden="true">
@@ -171,7 +227,7 @@
   <!-- ════════════════════════════════
        ABOUT SECTION
   ═════════════════════════════════ -->
-  <div class="divider"></div>
+  <div class="section-divider"></div>
   <section id="about" aria-labelledby="about-h">
     <div class="container">
 
@@ -180,14 +236,8 @@
         <!-- Left column: professional photo -->
         <div class="about-photo-col reveal">
           <div class="photo-frame">
-            <!--
-              YOUR PHOTO:
-              Save your photo as: assets/photo.jpg
-              (drag the image file into your my-protfolio/assets/ folder)
-            -->
             <img src="assets/shamal.jpg" alt="Shamal Sathsara — professional photograph" id="profile-photo" />
           </div>
-
           <!-- Floating stat badge -->
           <div class="photo-badge">
             <div class="pb-num">HNDIT</div>
@@ -200,7 +250,7 @@
 
           <p class="section-eyebrow reveal">Who I Am</p>
           <h2 class="section-title reveal d1" id="about-h">
-            Developer.<br />Builder. <span class="gold-text">Creator.</span>
+            Developer.<br />Builder. <span class="violet-text">Creator.</span>
           </h2>
 
           <p class="reveal d2">
@@ -222,7 +272,7 @@
             <span class="chip">📍 Piliyandala, Sri Lanka</span>
             <span class="chip">🐧 Ubuntu Dev</span>
             <span class="chip">🏫 Dehiwala University</span>
-            <span class="chip">🎮 Valorant & Warzone</span>
+            <span class="chip">🎮 Valorant &amp; Warzone</span>
           </div>
 
           <!-- Fun facts 2×2 grid -->
@@ -245,7 +295,7 @@
             <div class="fact">
               <div class="fi">🎬</div>
               <h4>Content Creator</h4>
-              <p>ASMR production & YouTube / TikTok branding</p>
+              <p>ASMR production &amp; YouTube / TikTok branding</p>
             </div>
           </div>
 
@@ -259,184 +309,143 @@
   <!-- ════════════════════════════════
        SKILLS SECTION
   ═════════════════════════════════ -->
-  <div class="divider"></div>
+  <div class="section-divider"></div>
   <section id="skills" aria-labelledby="skills-h">
     <div class="container">
 
-      <!-- Centered header -->
       <div class="skills-hd">
         <p class="section-eyebrow reveal">Technical Arsenal</p>
         <h2 class="section-title reveal d1" id="skills-h">
-          What I <span class="gold-text">Work With</span>
+          What I <span class="violet-text">Work With</span>
         </h2>
         <p class="section-sub reveal d2">
           Languages, frameworks, and tools I use to ship real products — from first commit to production.
         </p>
       </div>
 
-      <!-- 4 skill category cards -->
       <div class="skills-grid">
 
         <!-- Backend -->
         <div class="sk-card reveal">
           <div class="sk-head">
-            <div class="sk-icon">⚡</div>
+            <div class="sk-icon sk-violet">⚡</div>
             <h3>Backend</h3>
           </div>
-          <!-- Skill bar: data-pct drives the animated fill width (set in main.js) -->
           <div class="sk-bar">
             <div class="sk-bar-top"><span>Node.js</span><span class="pct">90%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill" data-pct="90"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-violet" data-pct="90"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>PHP</span><span class="pct">80%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill" data-pct="80"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-violet" data-pct="80"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>Express.js</span><span class="pct">85%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill" data-pct="85"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-violet" data-pct="85"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>REST APIs</span><span class="pct">88%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill" data-pct="88"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-violet" data-pct="88"></div></div>
           </div>
-        </div><!-- /.sk-card Backend -->
+        </div>
 
         <!-- Frontend -->
         <div class="sk-card reveal d1">
           <div class="sk-head">
-            <div class="sk-icon blue">🎨</div>
+            <div class="sk-icon sk-amber">🎨</div>
             <h3>Frontend</h3>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>React</span><span class="pct">82%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill blue-fill" data-pct="82"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-amber" data-pct="82"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>JavaScript (ES6+)</span><span class="pct">88%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill blue-fill" data-pct="88"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-amber" data-pct="88"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>HTML / CSS</span><span class="pct">92%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill blue-fill" data-pct="92"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-amber" data-pct="92"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>Vite / Build Tools</span><span class="pct">75%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill blue-fill" data-pct="75"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-amber" data-pct="75"></div></div>
           </div>
-        </div><!-- /.sk-card Frontend -->
+        </div>
 
         <!-- Database -->
         <div class="sk-card reveal d2">
           <div class="sk-head">
-            <div class="sk-icon">🗄️</div>
+            <div class="sk-icon sk-violet">🗄️</div>
             <h3>Database</h3>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>MySQL</span><span class="pct">85%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill" data-pct="85"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-violet" data-pct="85"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>MongoDB</span><span class="pct">78%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill" data-pct="78"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-violet" data-pct="78"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>Schema Design</span><span class="pct">80%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill" data-pct="80"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-violet" data-pct="80"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>Mongoose / ORM</span><span class="pct">75%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill" data-pct="75"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-violet" data-pct="75"></div></div>
           </div>
-        </div><!-- /.sk-card Database -->
+        </div>
 
         <!-- Tools & Environment -->
         <div class="sk-card reveal d3">
           <div class="sk-head">
-            <div class="sk-icon blue">🛠️</div>
-            <h3>Tools & Env</h3>
+            <div class="sk-icon sk-amber">🛠️</div>
+            <h3>Tools &amp; Env</h3>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>Ubuntu / Linux</span><span class="pct">87%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill blue-fill" data-pct="87"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-amber" data-pct="87"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>Git / GitHub</span><span class="pct">83%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill blue-fill" data-pct="83"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-amber" data-pct="83"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>Baileys (WA API)</span><span class="pct">90%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill blue-fill" data-pct="90"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-amber" data-pct="90"></div></div>
           </div>
           <div class="sk-bar">
             <div class="sk-bar-top"><span>VS Code</span><span class="pct">95%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill blue-fill" data-pct="95"></div>
-            </div>
+            <div class="sk-bar-track"><div class="sk-fill sf-amber" data-pct="95"></div></div>
           </div>
-        </div><!-- /.sk-card Tools -->
+        </div>
 
-        <!-- Machine Learning / AI -->
-        <div class="sk-card reveal d4">
+        <!-- Machine Learning / AI — wide card -->
+        <div class="sk-card sk-card-wide reveal d4">
           <div class="sk-head">
-            <div class="sk-icon sk-icon-green">🤖</div>
+            <div class="sk-icon sk-green">🤖</div>
             <h3>ML / AI</h3>
           </div>
-          <div class="sk-bar">
-            <div class="sk-bar-top"><span>Python</span><span class="pct">85%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill green-fill" data-pct="85"></div>
+          <div class="sk-bars-row">
+            <div class="sk-bar">
+              <div class="sk-bar-top"><span>Python</span><span class="pct">85%</span></div>
+              <div class="sk-bar-track"><div class="sk-fill sf-green" data-pct="85"></div></div>
+            </div>
+            <div class="sk-bar">
+              <div class="sk-bar-top"><span>scikit-learn</span><span class="pct">80%</span></div>
+              <div class="sk-bar-track"><div class="sk-fill sf-green" data-pct="80"></div></div>
+            </div>
+            <div class="sk-bar">
+              <div class="sk-bar-top"><span>Pandas</span><span class="pct">78%</span></div>
+              <div class="sk-bar-track"><div class="sk-fill sf-green" data-pct="78"></div></div>
+            </div>
+            <div class="sk-bar">
+              <div class="sk-bar-top"><span>Matplotlib</span><span class="pct">72%</span></div>
+              <div class="sk-bar-track"><div class="sk-fill sf-green" data-pct="72"></div></div>
             </div>
           </div>
-          <div class="sk-bar">
-            <div class="sk-bar-top"><span>scikit-learn</span><span class="pct">80%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill green-fill" data-pct="80"></div>
-            </div>
-          </div>
-          <div class="sk-bar">
-            <div class="sk-bar-top"><span>Pandas</span><span class="pct">78%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill green-fill" data-pct="78"></div>
-            </div>
-          </div>
-          <div class="sk-bar">
-            <div class="sk-bar-top"><span>Matplotlib</span><span class="pct">72%</span></div>
-            <div class="sk-bar-track">
-              <div class="sk-fill green-fill" data-pct="72"></div>
-            </div>
-          </div>
-        </div><!-- /.sk-card ML/AI -->
+        </div>
 
       </div><!-- /.skills-grid -->
     </div><!-- /.container -->
@@ -446,14 +455,14 @@
   <!-- ════════════════════════════════
        PROJECTS SECTION
   ═════════════════════════════════ -->
-  <div class="divider"></div>
+  <div class="section-divider"></div>
   <section id="projects" aria-labelledby="projects-h">
     <div class="container">
 
       <div class="proj-hd">
         <p class="section-eyebrow reveal">What I've Built</p>
         <h2 class="section-title reveal d1" id="projects-h">
-          Featured <span class="gold-text">Projects</span>
+          Featured <span class="violet-text">Projects</span>
         </h2>
         <p class="section-sub reveal d2">
           Real-world applications, built end-to-end from database design to deployment.
@@ -463,9 +472,14 @@
       <div class="proj-grid">
 
         <!-- ── Project: Aura_Bot ── -->
-        <article class="proj-card reveal" aria-label="Aura_Bot project">
-          <div class="pc-head pc-g1">
-            <span class="pc-emoji" aria-hidden="true">🤖</span>
+        <article class="proj-card reveal" data-tilt aria-label="Aura_Bot project">
+          <div class="pc-shimmer" aria-hidden="true"></div>
+          <div class="pc-slider">
+            <img src="assets/Aura_Bot/owner_image.jpg" alt="Aura_Bot Slide 1">
+            <img src="assets/Aura_Bot/Screenshot 2026-07-02 133226.png" alt="Aura_Bot Slide 2">
+            <img src="assets/Aura_Bot/Screenshot 2026-07-02 133312.png" alt="Aura_Bot Slide 3">
+          </div>
+          <div class="pc-head pc-violet">
             <h3>Aura_Bot</h3>
             <small>WhatsApp Bot Platform</small>
           </div>
@@ -476,19 +490,14 @@
               and a university resource hub for past papers and study guides.
             </p>
             <div class="tech-row" aria-label="Technologies used">
-              <span class="tpill tp-gold">Node.js</span>
-              <span class="tpill tp-gold">Baileys</span>
-              <span class="tpill tp-blue">WhatsApp API</span>
-              <span class="tpill tp-blue">JavaScript</span>
+              <span class="tpill tp-violet">Node.js</span>
+              <span class="tpill tp-violet">Baileys</span>
+              <span class="tpill tp-amber">WhatsApp API</span>
+              <span class="tpill tp-amber">JavaScript</span>
             </div>
             <div class="pc-links">
-              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link"
-                aria-label="Aura_Bot on GitHub">
-                <!-- GitHub icon -->
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
+              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link" aria-label="Aura_Bot on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
                 View on GitHub
               </a>
             </div>
@@ -496,9 +505,14 @@
         </article>
 
         <!-- ── Project: TogetherweRise ── -->
-        <article class="proj-card reveal d1" aria-label="TogetherweRise project">
-          <div class="pc-head pc-g2">
-            <span class="pc-emoji" aria-hidden="true">🤝</span>
+        <article class="proj-card reveal d1" data-tilt aria-label="TogetherweRise project">
+          <div class="pc-shimmer" aria-hidden="true"></div>
+          <div class="pc-slider">
+            <img src="assets/TogertherWeRise/Screenshot 2026-07-02 133748.png" alt="TogetherweRise Slide 1">
+            <img src="assets/TogertherWeRise/Screenshot 2026-07-02 133811.png" alt="TogetherweRise Slide 2">
+            <img src="assets/TogertherWeRise/Screenshot 2026-07-02 133846.png" alt="TogetherweRise Slide 3">
+          </div>
+          <div class="pc-head pc-amber">
             <h3>TogetherweRise</h3>
             <small>MERN Fundraising Platform</small>
           </div>
@@ -509,19 +523,15 @@
               and a public transparency dashboard.
             </p>
             <div class="tech-row" aria-label="Technologies used">
-              <span class="tpill tp-blue">MongoDB</span>
-              <span class="tpill tp-blue">Express</span>
-              <span class="tpill tp-gold">React</span>
-              <span class="tpill tp-gold">Node.js</span>
+              <span class="tpill tp-violet">MongoDB</span>
+              <span class="tpill tp-violet">Express</span>
+              <span class="tpill tp-amber">React</span>
+              <span class="tpill tp-amber">Node.js</span>
               <span class="tpill tp-green">Vite</span>
             </div>
             <div class="pc-links">
-              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link"
-                aria-label="Togetherwise on GitHub">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
+              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link" aria-label="TogetherweRise on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
                 View on GitHub
               </a>
             </div>
@@ -529,31 +539,28 @@
         </article>
 
         <!-- ── Project: Gym Management ── -->
-        <article class="proj-card reveal d2" aria-label="Gym Management System project">
-          <div class="pc-head pc-g3">
-            <span class="pc-emoji" aria-hidden="true">🏋️</span>
+        <article class="proj-card reveal d2" data-tilt aria-label="Gym Management System project">
+          <div class="pc-shimmer" aria-hidden="true"></div>
+          <div class="pc-slider">
+            <img src="assets/Gymmanagement/Screenshot 2026-07-02 134811.png" alt="Gym Management Slide 1">
+            <img src="assets/Gymmanagement/Screenshot 2026-07-02 135951.png" alt="Gym Management Slide 2">
+            <img src="assets/Gymmanagement/Screenshot 2026-07-02 140007.png" alt="Gym Management Slide 3">
+          </div>
+          <div class="pc-head pc-green">
             <h3>Gym Management</h3>
             <small>Web Management Platform</small>
           </div>
           <div class="pc-body">
             <p class="pc-desc">
-              A database-driven web platform built from scratch with <strong>PHP</strong> and
-              <strong>MySQL</strong>. Manages members, sessions, and trainer assignments for a
+              A platform built from scratch with <strong>Java</strong>. Manages members, sessions, and trainer assignments for a
               fitness centre via a clean admin panel.
             </p>
             <div class="tech-row" aria-label="Technologies used">
-              <span class="tpill tp-green">PHP</span>
-              <span class="tpill tp-green">MySQL</span>
-              <span class="tpill tp-gold">HTML / CSS</span>
-              <span class="tpill tp-blue">JavaScript</span>
+              <span class="tpill tp-green">Java</span>
             </div>
             <div class="pc-links">
-              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link"
-                aria-label="Gym Management on GitHub">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
+              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link" aria-label="Gym Management on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
                 View on GitHub
               </a>
             </div>
@@ -561,9 +568,14 @@
         </article>
 
         <!-- ── Project: Dragon Animation ── -->
-        <article class="proj-card reveal d3" aria-label="Dragon Animation Python project">
-          <div class="pc-head pc-g1">
-            <span class="pc-emoji" aria-hidden="true">🐉</span>
+        <article class="proj-card reveal d3" data-tilt aria-label="Dragon Animation Python project">
+          <div class="pc-shimmer" aria-hidden="true"></div>
+          <div class="pc-slider">
+            <img src="assets/Dragon/Screenshot 2026-07-02 140721.png" alt="Dragon Animation Slide 1">
+            <img src="assets/Dragon/Screenshot 2026-07-02 140747.png" alt="Dragon Animation Slide 2">
+            <img src="assets/Dragon/Screenshot 2026-07-02 140802.png" alt="Dragon Animation Slide 3">
+          </div>
+          <div class="pc-head pc-violet">
             <h3>Dragon Animation</h3>
             <small>Python Animation</small>
           </div>
@@ -577,22 +589,23 @@
               <span class="tpill tp-green">Pygame</span>
             </div>
             <div class="pc-links">
-              <a href="https://github.com/shamalsathsara/Dragon-Animation-Python-" target="_blank"
-                rel="noopener noreferrer" class="gh-link" aria-label="Dragon Animation on GitHub">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
+              <a href="https://github.com/shamalsathsara/Dragon-Animation-Python-" target="_blank" rel="noopener noreferrer" class="gh-link" aria-label="Dragon Animation on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
                 View on GitHub
               </a>
             </div>
           </div>
         </article>
 
-        <!-- ── Project: PC Hardware Bottleneck Analyzer ── -->
-        <article class="proj-card reveal d0" aria-label="PC Hardware Bottleneck Analyzer project">
-          <div class="pc-head pc-g2">
-            <span class="pc-emoji" aria-hidden="true">🖥️</span>
+        <!-- ── Project: PC Bottleneck Analyzer ── -->
+        <article class="proj-card reveal d0" data-tilt aria-label="PC Hardware Bottleneck Analyzer project">
+          <div class="pc-shimmer" aria-hidden="true"></div>
+          <div class="pc-slider">
+            <img src="assets/Hardware/Screenshot 2026-07-02 181333.png" alt="PC Bottleneck Analyzer Slide 1">
+            <img src="assets/Hardware/Screenshot 2026-07-02 181421.png" alt="PC Bottleneck Analyzer Slide 2">
+            <img src="assets/Hardware/Screenshot 2026-07-02 181443.png" alt="PC Bottleneck Analyzer Slide 3">
+          </div>
+          <div class="pc-head pc-amber">
             <h3>PC Bottleneck Analyzer</h3>
             <small>ML-Powered Full-Stack Tool</small>
           </div>
@@ -604,19 +617,15 @@
               <strong>95% accuracy</strong>, with algorithm-driven upgrade path recommendations.
             </p>
             <div class="tech-row" aria-label="Technologies used">
-              <span class="tpill tp-gold">Python</span>
-              <span class="tpill tp-gold">scikit-learn</span>
-              <span class="tpill tp-blue">REST API</span>
-              <span class="tpill tp-blue">JavaScript</span>
+              <span class="tpill tp-amber">Python</span>
+              <span class="tpill tp-amber">scikit-learn</span>
+              <span class="tpill tp-violet">REST API</span>
+              <span class="tpill tp-violet">JavaScript</span>
               <span class="tpill tp-green">Machine Learning</span>
             </div>
             <div class="pc-links">
-              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link"
-                aria-label="PC Bottleneck Analyzer on GitHub">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
+              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link" aria-label="PC Bottleneck Analyzer on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
                 View on GitHub
               </a>
             </div>
@@ -624,9 +633,14 @@
         </article>
 
         <!-- ── Project: Packman Game ── -->
-        <article class="proj-card reveal d1" aria-label="Packman Game project">
-          <div class="pc-head pc-g3">
-            <span class="pc-emoji" aria-hidden="true">👾</span>
+        <article class="proj-card reveal d1" data-tilt aria-label="Packman Game project">
+          <div class="pc-shimmer" aria-hidden="true"></div>
+          <div class="pc-slider">
+            <img src="assets/Packman/Screenshot 2026-07-02 180441.png" alt="Packman Game Slide 1">
+            <img src="assets/Packman/Screenshot 2026-07-02 180518.png" alt="Packman Game Slide 2">
+            <img src="assets/Packman/Screenshot 2026-07-02 180532.png" alt="Packman Game Slide 3">
+          </div>
+          <div class="pc-head pc-green">
             <h3>Packman Game</h3>
             <small>Java University Project</small>
           </div>
@@ -638,18 +652,14 @@
               and demonstrating OOP fundamentals.
             </p>
             <div class="tech-row" aria-label="Technologies used">
-              <span class="tpill tp-gold">Java</span>
-              <span class="tpill tp-blue">Swing / AWT</span>
+              <span class="tpill tp-amber">Java</span>
+              <span class="tpill tp-violet">Swing / AWT</span>
               <span class="tpill tp-green">Game Loop</span>
               <span class="tpill tp-green">OOP</span>
             </div>
             <div class="pc-links">
-              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link"
-                aria-label="Packman Game on GitHub">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
+              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link" aria-label="Packman Game on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
                 View on GitHub
               </a>
             </div>
@@ -657,13 +667,18 @@
         </article>
 
         <!-- ── Project: Food Nutrition App ── -->
-        <article class="proj-card reveal d2" aria-label="Food Nutrition App project">
-          <div class="pc-head pc-g1">
+        <article class="proj-card reveal d2" data-tilt aria-label="Food Nutrition App project">
+          <div class="pc-shimmer" aria-hidden="true"></div>
+          <div class="pc-slider">
+            <img src="assets/FoodNutri/1779621130845.jpg" alt="Food Nutrition Slide 1">
+            <img src="assets/FoodNutri/1779621130930.jpg" alt="Food Nutrition Slide 2">
+            <img src="assets/FoodNutri/1779621130845.jpg" alt="Food Nutrition Slide 3">
+          </div>
+          <div class="pc-head pc-violet">
             <div class="wip-badge" aria-label="Currently in development">
               <span class="wip-dot" aria-hidden="true"></span>
               In Development
             </div>
-            <span class="pc-emoji" aria-hidden="true">🍛</span>
             <h3>Food Nutrition App</h3>
             <small>Flutter · TensorFlow Lite</small>
           </div>
@@ -675,19 +690,15 @@
               nutritional data, regional origins, and estimated pricing.
             </p>
             <div class="tech-row" aria-label="Technologies used">
-              <span class="tpill tp-blue">Flutter</span>
-              <span class="tpill tp-blue">Dart</span>
-              <span class="tpill tp-gold">TensorFlow Lite</span>
-              <span class="tpill tp-gold">Computer Vision</span>
+              <span class="tpill tp-violet">Flutter</span>
+              <span class="tpill tp-violet">Dart</span>
+              <span class="tpill tp-amber">TensorFlow Lite</span>
+              <span class="tpill tp-amber">Computer Vision</span>
               <span class="tpill tp-green">Offline-First</span>
             </div>
             <div class="pc-links">
-              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link"
-                aria-label="Food Nutrition App on GitHub">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
+              <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="gh-link" aria-label="Food Nutrition App on GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
                 View on GitHub
               </a>
             </div>
@@ -702,14 +713,14 @@
   <!-- ════════════════════════════════
        CREATIVE SECTION
   ═════════════════════════════════ -->
-  <div class="divider"></div>
+  <div class="section-divider"></div>
   <section id="creative" aria-labelledby="creative-h">
     <div class="container">
 
       <div class="cr-hd">
         <p class="section-eyebrow reveal">Beyond Code</p>
         <h2 class="section-title reveal d1" id="creative-h">
-          Creative <span class="gold-text">Endeavors</span>
+          Creative <span class="violet-text">Endeavors</span>
         </h2>
         <p class="section-sub reveal d2">
           I wear more than one hat — here's what I create when I'm not writing code.
@@ -729,7 +740,7 @@
           <div class="cr-tags">
             <span class="cr-tag ct-pink">ASMR</span>
             <span class="cr-tag ct-pink">Video Production</span>
-            <span class="cr-tag ct-blue">Visual FX</span>
+            <span class="cr-tag ct-violet">Visual FX</span>
             <span class="cr-tag ct-pink">Audio Engineering</span>
           </div>
         </div>
@@ -737,17 +748,17 @@
         <!-- Channel Branding -->
         <div class="cr-card c2 reveal d1">
           <div class="cr-icon ci2" aria-hidden="true">🎨</div>
-          <h3>Channel Branding & Design</h3>
+          <h3>Channel Branding &amp; Design</h3>
           <p>
             Creating logos, thumbnails, and video intros for YouTube and TikTok. I brand
             <strong>Dark Gaming SL</strong> and <strong>SP Tv</strong> — building cohesive
             visual identities from scratch.
           </p>
           <div class="cr-tags">
-            <span class="cr-tag ct-gold">Logo Design</span>
-            <span class="cr-tag ct-gold">YouTube</span>
-            <span class="cr-tag ct-gold">TikTok</span>
-            <span class="cr-tag ct-blue">Thumbnails</span>
+            <span class="cr-tag ct-amber">Logo Design</span>
+            <span class="cr-tag ct-amber">YouTube</span>
+            <span class="cr-tag ct-amber">TikTok</span>
+            <span class="cr-tag ct-violet">Thumbnails</span>
           </div>
         </div>
 
@@ -763,8 +774,8 @@
           <div class="cr-tags">
             <span class="cr-tag ct-green">Illustration</span>
             <span class="cr-tag ct-green">Meme Review</span>
-            <span class="cr-tag ct-blue">Sri Lanka</span>
-            <span class="cr-tag ct-gold">Collab</span>
+            <span class="cr-tag ct-violet">Sri Lanka</span>
+            <span class="cr-tag ct-amber">Collab</span>
           </div>
         </div>
 
@@ -774,9 +785,137 @@
 
 
   <!-- ════════════════════════════════
+       CERTIFICATES SECTION
+  ═════════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section id="certificates" aria-labelledby="certs-h">
+    <div class="container">
+
+      <div class="cert-hd">
+        <p class="section-eyebrow reveal">Achievements</p>
+        <h2 class="section-title reveal d1" id="certs-h">
+          My <span class="violet-text">Certificates</span>
+        </h2>
+        <p class="section-sub reveal d2">
+          Professional certifications and completed courses. Hover to view details.
+        </p>
+      </div>
+
+      <div class="cert-grid">
+
+        <!-- Certificate 1 -->
+        <div class="cert-card reveal d1" tabindex="0" aria-label="Certificate 1">
+          <div class="cert-inner">
+            <div class="cert-front">
+              <h3>Introduction to MERN Stack</h3>
+              <p class="cert-desc">Comprehensive training on MongoDB, Express, React, and Node.js.</p>
+              <div class="cert-meta">
+                <p><span>Issued by:</span> Simplilearn SkillUp</p>
+                <p><span>Date:</span> 22nd June 2026</p>
+                <p><span>Code:</span> 10378962</p>
+              </div>
+            </div>
+            <div class="cert-back">
+              <img src="assets/MERN.png" alt="Introduction to MERN Stack Certificate">
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 2 -->
+        <div class="cert-card reveal d2" tabindex="0" aria-label="Certificate 2">
+          <div class="cert-inner">
+            <div class="cert-front">
+              <h3>Introduction to Figma</h3>
+              <p class="cert-desc">Mastered UI/UX design principles and prototyping using Figma.</p>
+              <div class="cert-meta">
+                <p><span>Issued by:</span> Simplilearn SkillUp</p>
+                <p><span>Date:</span> 14th June 2025</p>
+                <p><span>Code:</span> 8466160</p>
+              </div>
+            </div>
+            <div class="cert-back">
+              <img src="assets/Figma.png" alt="Introduction to Figma Certificate">
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 3 -->
+        <div class="cert-card reveal d3" tabindex="0" aria-label="Certificate 3">
+          <div class="cert-inner">
+            <div class="cert-front">
+              <h3 class="amber-title">Industrial Networking Essentials</h3>
+              <p class="cert-desc">Core concepts of industrial networking and digital technologies.</p>
+              <div class="cert-meta">
+                <p><span>Issued by:</span> Cisco Networking Academy</p>
+                <p><span>Date:</span> 21st Oct 2025</p>
+              </div>
+            </div>
+            <div class="cert-back">
+              <img src="assets/Networking.png" alt="Industrial Networking Essentials Certificate">
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 4 -->
+        <div class="cert-card reveal d4" tabindex="0" aria-label="Certificate 4">
+          <div class="cert-inner">
+            <div class="cert-front">
+              <h3>Computer Hardware Basics</h3>
+              <p class="cert-desc">Fundamental knowledge of computer hardware components and troubleshooting.</p>
+              <div class="cert-meta">
+                <p><span>Issued by:</span> Cisco Networking Academy</p>
+                <p><span>Date:</span> 09th Jun 2026</p>
+              </div>
+            </div>
+            <div class="cert-back">
+              <img src="assets/Computer Hardware.png" alt="Computer Hardware Basics Certificate">
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate 5 -->
+        <div class="cert-card reveal d5" tabindex="0" aria-label="Certificate 5">
+          <div class="cert-inner">
+            <div class="cert-front">
+              <h3 class="green-title">Linux Unhatched</h3>
+              <p class="cert-desc">Introduction to the Linux command line and operating system basics.</p>
+              <div class="cert-meta">
+                <p><span>Issued by:</span> Cisco Networking Academy</p>
+                <p><span>Date:</span> 14th May 2026</p>
+              </div>
+            </div>
+            <div class="cert-back">
+              <img src="assets/Linux.png" alt="Linux Unhatched Certificate">
+            </div>
+          </div>
+        </div>
+
+      <!-- Certificate 6 -->
+        <div class="cert-card reveal" tabindex="0" aria-label="Certificate 6">
+          <div class="cert-inner">
+            <div class="cert-front">
+              <h3>Web Design</h3>
+              <p class="cert-desc">Mastered modern web design principles, layout strategies, and responsive UI creation.</p>
+              <div class="cert-meta">
+                <p><span>Issued by:</span> Online Platform</p>
+                <p><span>Date:</span> 2024</p>
+              </div>
+            </div>
+            <div class="cert-back">
+              <img src="assets/WebDesign.png" alt="Web Design Certificate">
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.cert-grid -->
+    </div><!-- /.container -->
+  </section><!-- /#certificates -->
+
+
+  <!-- ════════════════════════════════
        CONTACT SECTION
   ═════════════════════════════════ -->
-  <div class="divider"></div>
+  <div class="section-divider"></div>
   <section id="contact" aria-labelledby="contact-h">
     <div class="container">
       <div class="contact-wrap">
@@ -785,7 +924,7 @@
         <div class="contact-hd">
           <p class="section-eyebrow reveal">Get In Touch</p>
           <h2 class="section-title reveal d1" id="contact-h">
-            Let's Build <span class="gold-text">Something.</span>
+            Let's Build <span class="violet-text">Something.</span>
           </h2>
           <p class="section-sub reveal d2">
             Open to freelance work, collaborations, and interesting opportunities.
@@ -793,31 +932,27 @@
           </p>
         </div>
 
-        <!-- Row 1: Phone, WhatsApp, Email (3 cards) -->
+        <!-- Row 1: Phone, WhatsApp, Email -->
         <div class="contact-grid reveal d3">
 
-          <!-- Telephone -->
           <a href="tel:+94723577218" class="c-card" id="crd-phone" aria-label="Call Shamal">
-            <div class="c-icon">📞</div>
+            <div class="c-icon ci-violet">📞</div>
             <div class="c-text">
               <div class="c-lbl">Telephone</div>
               <div class="c-val">072 357 7218</div>
             </div>
           </a>
 
-          <!-- WhatsApp -->
-          <a href="https://wa.me/94771581916" target="_blank" rel="noopener noreferrer" class="c-card" id="crd-whatsapp"
-            aria-label="Message on WhatsApp">
-            <div class="c-icon">💬</div>
+          <a href="https://wa.me/94771581916" target="_blank" rel="noopener noreferrer" class="c-card" id="crd-whatsapp" aria-label="Message on WhatsApp">
+            <div class="c-icon ci-green">💬</div>
             <div class="c-text">
               <div class="c-lbl">WhatsApp</div>
               <div class="c-val">077 158 1916</div>
             </div>
           </a>
 
-          <!-- Email -->
           <a href="mailto:shamalsathsara4@gmail.com" class="c-card" id="crd-email" aria-label="Send an email">
-            <div class="c-icon">✉️</div>
+            <div class="c-icon ci-amber">✉️</div>
             <div class="c-text">
               <div class="c-lbl">Email</div>
               <div class="c-val">shamalsathsara4@gmail.com</div>
@@ -826,18 +961,12 @@
 
         </div><!-- /.contact-grid row1 -->
 
-        <!-- Row 2: GitHub, Location (2 cards) -->
+        <!-- Row 2: GitHub, Location -->
         <div class="contact-grid row2 reveal d4">
 
-          <!-- GitHub -->
-          <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="c-card"
-            id="crd-github" aria-label="GitHub profile">
-            <div class="c-icon blue-ic">
-              <!-- GitHub SVG icon -->
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--blue)" aria-hidden="true">
-                <path
-                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-              </svg>
+          <a href="https://github.com/shamalsathsara" target="_blank" rel="noopener noreferrer" class="c-card" id="crd-github" aria-label="GitHub profile">
+            <div class="c-icon ci-violet">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>
             </div>
             <div class="c-text">
               <div class="c-lbl">GitHub</div>
@@ -845,9 +974,8 @@
             </div>
           </a>
 
-          <!-- Location -->
           <div class="c-card" id="crd-location" tabindex="0" aria-label="Location">
-            <div class="c-icon">📍</div>
+            <div class="c-icon ci-amber">📍</div>
             <div class="c-text">
               <div class="c-lbl">Location</div>
               <div class="c-val">Piliyandala, Sri Lanka 🇱🇰</div>
@@ -856,36 +984,22 @@
 
         </div><!-- /.contact-grid row2 -->
 
-        <!-- Social media buttons (Facebook + LinkedIn) -->
+        <!-- Social media buttons -->
         <div class="social-row reveal d5">
 
-          <!-- Facebook -->
-          <!-- Update href with your actual Facebook profile URL -->
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="soc-btn" id="soc-fb"
-            aria-label="Facebook profile">
-            <!-- Facebook icon -->
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path
-                d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.024 10.125 11.927v-8.434H7.078v-3.493h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.493h-2.796v8.434C19.612 23.097 24 18.1 24 12.073z" />
-            </svg>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="soc-btn" id="soc-fb" aria-label="Facebook profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.027 4.388 11.024 10.125 11.927v-8.434H7.078v-3.493h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.493h-2.796v8.434C19.612 23.097 24 18.1 24 12.073z" /></svg>
             Facebook
           </a>
 
-          <!-- LinkedIn -->
-          <!-- Update href with your actual LinkedIn profile URL -->
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="soc-btn" id="soc-li"
-            aria-label="LinkedIn profile">
-            <!-- LinkedIn icon -->
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path
-                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-            </svg>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="soc-btn" id="soc-li" aria-label="LinkedIn profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
             LinkedIn
           </a>
 
         </div><!-- /.social-row -->
 
-        <!-- Fun note at bottom -->
+        <!-- Fun note -->
         <div class="gamer-note reveal d5">
           <span aria-hidden="true">🎮</span>
           Also a competitive Valorant &amp; Warzone player — fair warning if we ever collab on gaming content!
@@ -902,7 +1016,6 @@
   <footer>
     <div class="container">
       <div class="footer-inner">
-
         <p class="footer-copy">
           &copy; 2026 Shamal Sathsara
         </p>
@@ -916,11 +1029,15 @@
     </div>
   </footer>
 
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top" title="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
 
   <!-- ════════════════════════════════
        MAIN SCRIPT
-       Loaded last so all DOM elements
-       exist before JS runs.
   ═════════════════════════════════ -->
   <script src="main.js"></script>
 
