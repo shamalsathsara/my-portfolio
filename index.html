@@ -171,46 +171,75 @@
           </p>
         </div><!-- /.hero-left -->
 
-        <!-- ── Right: Decorative code window ── -->
+        <!-- ── Right: Interactive Tech Orbit ── -->
         <div class="hero-right" aria-hidden="true">
-          <div class="code-window">
-            <div class="cw-header">
-              <div class="cw-dots">
-                <span class="cw-dot cd-red"></span>
-                <span class="cw-dot cd-yellow"></span>
-                <span class="cw-dot cd-green"></span>
+          <div class="orbit-scene" id="orbit-scene">
+
+            <!-- Central core -->
+            <div class="orbit-core">
+              <div class="core-ring cr-1"></div>
+              <div class="core-ring cr-2"></div>
+              <div class="core-ring cr-3"></div>
+              <div class="core-pulse"></div>
+              <div class="core-inner">
+                <span class="core-initials">SS</span>
+                <span class="core-label">Full-Stack</span>
               </div>
-              <span class="cw-title">shamal.config.js</span>
             </div>
-            <div class="cw-body">
-              <pre class="cw-code"><span class="cw-kw">const</span> <span class="cw-var">dev</span> = {
-  <span class="cw-prop">name</span>:      <span class="cw-str">"Shamal Sathsara"</span>,
-  <span class="cw-prop">role</span>:      <span class="cw-str">"Full-Stack Dev"</span>,
-  <span class="cw-prop">stack</span>: [
-    <span class="cw-str">"Node.js"</span>,  <span class="cw-str">"React"</span>,
-    <span class="cw-str">"PHP"</span>,      <span class="cw-str">"Python"</span>,
-    <span class="cw-str">"Flutter"</span>,  <span class="cw-str">"MySQL"</span>,
-  ],
-  <span class="cw-prop">location</span>: <span class="cw-str">"Sri Lanka 🇱🇰"</span>,
-  <span class="cw-prop">available</span>: <span class="cw-bool">true</span>,
-  <span class="cw-prop">passion</span>:  <span class="cw-str">"Building things"</span>,
-};
 
-<span class="cw-kw">export default</span> dev;</pre>
+            <!-- Orbit ring guides (visual only) -->
+            <div class="orbit-ring" style="--r:200px"></div>
+            <div class="orbit-ring" style="--r:300px"></div>
+            <div class="orbit-ring" style="--r:410px"></div>
+
+            <!-- Inner orbit planets (r=100px, 10s) -->
+            <div class="orbit-planet op-node"
+                 style="--orbit-r:100px;--orbit-d:10s;--orbit-delay:0s">
+              <span class="planet-icon">⚡</span>
+              <span class="planet-name">Node.js</span>
             </div>
-          </div>
+            <div class="orbit-planet op-react"
+                 style="--orbit-r:100px;--orbit-d:10s;--orbit-delay:-5s">
+              <span class="planet-icon">⚛️</span>
+              <span class="planet-name">React</span>
+            </div>
 
-          <!-- Floating tech badges -->
-          <div class="float-badge fb-1">
-            <span>🤖</span> WhatsApp Bot
-          </div>
-          <div class="float-badge fb-2">
-            <span>⚡</span> MERN Stack
-          </div>
-          <div class="float-badge fb-3">
-            <span>🧠</span> ML / AI
-          </div>
+            <!-- Middle orbit planets (r=150px, 16s) -->
+            <div class="orbit-planet op-python"
+                 style="--orbit-r:150px;--orbit-d:16s;--orbit-delay:-2.67s">
+              <span class="planet-icon">🐍</span>
+              <span class="planet-name">Python</span>
+            </div>
+            <div class="orbit-planet op-php"
+                 style="--orbit-r:150px;--orbit-d:16s;--orbit-delay:-10.67s">
+              <span class="planet-icon">🐘</span>
+              <span class="planet-name">PHP</span>
+            </div>
+
+            <!-- Outer orbit planets (r=205px, 24s) -->
+            <div class="orbit-planet op-flutter"
+                 style="--orbit-r:205px;--orbit-d:24s;--orbit-delay:-2s">
+              <span class="planet-icon">📱</span>
+              <span class="planet-name">Flutter</span>
+            </div>
+            <div class="orbit-planet op-mysql"
+                 style="--orbit-r:205px;--orbit-d:24s;--orbit-delay:-10s">
+              <span class="planet-icon">🗄️</span>
+              <span class="planet-name">MySQL</span>
+            </div>
+            <div class="orbit-planet op-ml"
+                 style="--orbit-r:205px;--orbit-d:24s;--orbit-delay:-18.67s">
+              <span class="planet-icon">🤖</span>
+              <span class="planet-name">ML / AI</span>
+            </div>
+
+            <!-- Ambient glow orbs -->
+            <div class="orbit-glow og-1" aria-hidden="true"></div>
+            <div class="orbit-glow og-2" aria-hidden="true"></div>
+
+          </div><!-- /.orbit-scene -->
         </div><!-- /.hero-right -->
+
 
       </div><!-- /.hero-grid -->
     </div><!-- /.container -->

@@ -409,3 +409,37 @@ sections.forEach(s => sectionObserver.observe(s));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 })();
+
+
+/* ────────────────────────────────────────────────────────────
+   12. ORBIT SCENE — Mouse-Parallax Tilt
+   The tech orbit tilts gently toward the cursor for depth.
+────────────────────────────────────────────────────────────── */
+(function () {
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  const scene = document.getElementById('orbit-scene');
+  if (!scene) return;
+
+  const MAX_TILT = 14; // degrees
+
+  document.addEventListener('mousemove', e => {
+    const rect   = scene.getBoundingClientRect();
+    // Scene centre in viewport space
+    const cx = rect.left + rect.width  / 2;
+    const cy = rect.top  + rect.height / 2;
+    // Normalise: -1 → +1 relative to screen centre
+    const nx = (e.clientX - cx) / (window.innerWidth  / 2);
+    const ny = (e.clientY - cy) / (window.innerHeight / 2);
+
+    const tiltX = -ny * MAX_TILT;
+    const tiltY =  nx * MAX_TILT;
+
+    scene.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+  });
+
+  // Reset on mouse leave
+  document.addEventListener('mouseleave', () => {
+    scene.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+  });
+})();
