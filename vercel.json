@@ -1,8 +1,9 @@
 {
   "name": "shamal-sathsara",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "framework": "vite",
   "headers": [
     {
       "source": "/(.*)",
