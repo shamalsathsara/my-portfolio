@@ -1,111 +1,174 @@
 /* ============================================================
    PORTFOLIO — SHAMAL SATHSARA  |  main.js
-   "Cyber Forge" — All interactive logic
-   1.  Scroll progress bar
-   2.  Navbar — scroll state + mobile menu
-   3.  Typing effect — hero subtitle
-   4.  Scroll reveal — IntersectionObserver
-   5.  Skill bar animation
-   6.  Active nav link highlight
-   7.  Canvas particle constellation
-   8.  Custom magnetic cursor
-   9.  Counter animation — stats count up
-   10. 3D tilt effect — project cards
-   11. Back-to-top button
+   "Cyber Forge" 2026 Edition — All interactive logic
+   1.  Page load body reveal
+   2.  Scroll progress bar
+   3.  Navbar — scroll state + mobile menu + active link
+   4.  Typing effect — hero subtitle
+   5.  Scroll reveal — IntersectionObserver
+   6.  Custom magnetic cursor
+   7.  Counter animation — stats count up
+   8.  3D tilt effect — project cards
+   9.  Slide animation pause when off-screen
+   10. Back-to-top button
+   11. Orbit scene — Mouse-Parallax Tilt
+   12. Canvas particle constellation (with visibility API)
+   13. Contact form handler
    ============================================================ */
 
+'use strict';
+
+/* ── Reduced-motion check (used by animation modules) ── */
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 /* ────────────────────────────────────────────────────────────
-   1. SCROLL PROGRESS BAR
+   1. PAGE LOAD — body is faded in via CSS animation.
+      Mark body as loaded for any JS-driven entrance effects.
+────────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  document.body.classList.add('loaded');
+});
+
+
+/* ────────────────────────────────────────────────────────────
+   2. UNIFIED SCROLL HANDLER
+   Single passive scroll listener — everything runs here.
 ────────────────────────────────────────────────────────────── */
 const progressBar = document.getElementById('scroll-progress');
+const navbar      = document.getElementById('navbar');
+const backToTop   = document.getElementById('back-to-top');
 
-window.addEventListener('scroll', () => {
+function onScroll() {
   const scrolled  = window.scrollY;
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  if (progressBar) progressBar.style.width = (scrolled / maxScroll * 100) + '%';
-}, { passive: true });
+
+  /* Scroll progress bar */
+  if (progressBar) {
+    progressBar.style.width = (scrolled / maxScroll * 100) + '%';
+  }
+
+  /* Navbar state */
+  navbar?.classList.toggle('scrolled', scrolled > 50);
+
+  /* Back-to-top visibility */
+  backToTop?.classList.toggle('visible', scrolled > 600);
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
 
 
 /* ────────────────────────────────────────────────────────────
-   2. NAVBAR — scroll state + mobile menu
+   3. NAVBAR — Mobile menu + active link tracking
 ────────────────────────────────────────────────────────────── */
-const navbar    = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
 const mobileNav = document.getElementById('mobile-nav');
 
-// Darken navbar on scroll
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 50);
-}, { passive: true });
-
-// Toggle hamburger
-hamburger.addEventListener('click', () => {
+/* ── Hamburger toggle ── */
+hamburger?.addEventListener('click', () => {
   const isOpen = hamburger.classList.toggle('open');
-  mobileNav.classList.toggle('open', isOpen);
+  mobileNav?.classList.toggle('open', isOpen);
   hamburger.setAttribute('aria-expanded', isOpen.toString());
-  mobileNav.setAttribute('aria-hidden', (!isOpen).toString());
+  mobileNav?.setAttribute('aria-hidden', (!isOpen).toString());
 });
 
-// Close mobile menu on link click
-mobileNav.querySelectorAll('a').forEach(link => {
+/* ── Close mobile menu on link click ── */
+mobileNav?.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
+    hamburger?.classList.remove('open');
     mobileNav.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger?.setAttribute('aria-expanded', 'false');
     mobileNav.setAttribute('aria-hidden', 'true');
   });
 });
 
+/* ── Keyboard: close mobile menu on Escape ── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && mobileNav?.classList.contains('open')) {
+    hamburger?.classList.remove('open');
+    mobileNav.classList.remove('open');
+    hamburger?.setAttribute('aria-expanded', 'false');
+    mobileNav?.setAttribute('aria-hidden', 'true');
+    hamburger?.focus();
+  }
+});
+
+/* ── Active nav link via IntersectionObserver ── */
+const sections   = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+
+const sectionObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navAnchors.forEach(a => a.classList.remove('nav-active'));
+        const active = document.querySelector(
+          `.nav-links a[href="#${entry.target.id}"]`
+        );
+        if (active && !active.classList.contains('nav-hire')) {
+          active.classList.add('nav-active');
+        }
+      }
+    });
+  },
+  { threshold: 0.45 }
+);
+
+sections.forEach(s => sectionObserver.observe(s));
+
 
 /* ────────────────────────────────────────────────────────────
-   3. TYPING EFFECT
-   Cycles through role strings, types + erases each one.
+   4. TYPING EFFECT
+   Cycles through 3 role strings, types + erases each one.
 ────────────────────────────────────────────────────────────── */
 const typedEl = document.getElementById('typed-text');
 
-const roles = [
-  'Full-Stack Developer',
-  'MERN Stack Engineer',
-  'WhatsApp Bot Builder',
-  'Node.js Enthusiast',
-  'Content Creator',
-  'ML / AI Explorer',
-];
+if (typedEl) {
+  const roles = [
+    'Full-Stack Developer',
+    'MERN Stack Engineer',
+    'ML / AI Explorer',
+  ];
 
-let roleIdx   = 0;
-let charIdx   = 0;
-let isErasing = false;
+  let roleIdx   = 0;
+  let charIdx   = 0;
+  let isErasing = false;
 
-function typeLoop() {
-  const current = roles[roleIdx];
-
-  if (isErasing) {
-    charIdx--;
-    typedEl.textContent = current.slice(0, charIdx);
-    if (charIdx === 0) {
-      isErasing = false;
-      roleIdx   = (roleIdx + 1) % roles.length;
-      setTimeout(typeLoop, 400);
+  function typeLoop() {
+    if (prefersReducedMotion) {
+      typedEl.textContent = roles[0];
       return;
     }
-    setTimeout(typeLoop, 36);
-  } else {
-    charIdx++;
-    typedEl.textContent = current.slice(0, charIdx);
-    if (charIdx === current.length) {
-      isErasing = true;
-      setTimeout(typeLoop, 2400);
-      return;
+
+    const current = roles[roleIdx];
+
+    if (isErasing) {
+      charIdx--;
+      typedEl.textContent = current.slice(0, charIdx);
+      if (charIdx === 0) {
+        isErasing = false;
+        roleIdx   = (roleIdx + 1) % roles.length;
+        setTimeout(typeLoop, 400);
+        return;
+      }
+      setTimeout(typeLoop, 36);
+    } else {
+      charIdx++;
+      typedEl.textContent = current.slice(0, charIdx);
+      if (charIdx === current.length) {
+        isErasing = true;
+        setTimeout(typeLoop, 2400);
+        return;
+      }
+      setTimeout(typeLoop, 56);
     }
-    setTimeout(typeLoop, 56);
   }
-}
 
-setTimeout(typeLoop, 1100);
+  setTimeout(typeLoop, 1100);
+}
 
 
 /* ────────────────────────────────────────────────────────────
-   4. SCROLL REVEAL
+   5. SCROLL REVEAL
    Watches .reveal elements and adds .visible when in view.
 ────────────────────────────────────────────────────────────── */
 const revealObserver = new IntersectionObserver(
@@ -124,141 +187,12 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 
 /* ────────────────────────────────────────────────────────────
-   5. SKILL BAR ANIMATION
-   Each .sk-fill has data-pct; width is set when scrolled in.
-────────────────────────────────────────────────────────────── */
-const barObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const bar = entry.target;
-        bar.style.width = bar.dataset.pct + '%';
-        barObserver.unobserve(bar);
-      }
-    });
-  },
-  { threshold: 0.4 }
-);
-
-document.querySelectorAll('.sk-fill').forEach(bar => barObserver.observe(bar));
-
-
-/* ────────────────────────────────────────────────────────────
-   6. ACTIVE NAV LINK HIGHLIGHT
-   Highlights the nav link for whichever section is in view.
-────────────────────────────────────────────────────────────── */
-const sections   = document.querySelectorAll('section[id]');
-const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
-
-const sectionObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navAnchors.forEach(a => a.style.removeProperty('color'));
-        const active = document.querySelector(
-          `.nav-links a[href="#${entry.target.id}"]`
-        );
-        if (active && !active.classList.contains('nav-hire')) {
-          active.style.color = 'var(--violet-light)';
-        }
-      }
-    });
-  },
-  { threshold: 0.45 }
-);
-
-sections.forEach(s => sectionObserver.observe(s));
-
-
-/* ────────────────────────────────────────────────────────────
-   7. CANVAS PARTICLE CONSTELLATION
-   Calm ambient violet/amber dots with connection lines.
-────────────────────────────────────────────────────────────── */
-(function () {
-  const canvas = document.createElement('canvas');
-  canvas.id = 'ambient-canvas';
-  Object.assign(canvas.style, {
-    position: 'fixed', top: '0', left: '0',
-    width: '100%', height: '100%',
-    zIndex: '0', pointerEvents: 'none',
-  });
-
-  const bgMesh = document.querySelector('.bg-mesh');
-  if (bgMesh) bgMesh.appendChild(canvas);
-  else document.body.prepend(canvas);
-
-  const ctx = canvas.getContext('2d');
-  let W, H, particles = [];
-
-  function init() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    particles = [];
-    const count = Math.floor((W * H) / 14000);
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: Math.random() * 1.5 + 0.4,
-        dx: (Math.random() - 0.5) * 0.22,
-        dy: (Math.random() - 0.5) * 0.22,
-        alpha: Math.random() * 0.42 + 0.12,
-        // Alternate between violet and amber hues
-        hue: Math.random() > 0.6 ? 265 : 38,
-      });
-    }
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-
-    // Draw particles
-    particles.forEach(p => {
-      p.x = (p.x + p.dx + W) % W;
-      p.y = (p.y + p.dy + H) % H;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${p.hue}, 82%, 72%, ${p.alpha})`;
-      ctx.fill();
-    });
-
-    // Draw connecting lines
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx   = particles[i].x - particles[j].x;
-        const dy   = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 115) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `hsla(265, 82%, 72%, ${(1 - dist / 115) * 0.11})`;
-          ctx.lineWidth   = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-
-    requestAnimationFrame(draw);
-  }
-
-  window.addEventListener('resize', () => {
-    clearTimeout(window._resizeTimer);
-    window._resizeTimer = setTimeout(init, 200);
-  }, { passive: true });
-
-  init();
-  draw();
-})();
-
-
-/* ────────────────────────────────────────────────────────────
-   8. CUSTOM MAGNETIC CURSOR
+   6. CUSTOM MAGNETIC CURSOR
    Smooth-lagging outer ring + snappy inner dot.
    Falls back to default on touch devices.
 ────────────────────────────────────────────────────────────── */
 (function () {
-  // Only on true pointer (non-touch) devices
+  if (prefersReducedMotion) return;
   if (window.matchMedia('(hover: none)').matches) return;
 
   const outer = document.getElementById('cursor-outer');
@@ -267,16 +201,21 @@ sections.forEach(s => sectionObserver.observe(s));
 
   let mouseX = -200, mouseY = -200;
   let outerX = -200, outerY = -200;
+  let hasMoved = false;
 
-  // Snappy dot — follows cursor exactly
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     dot.style.left = mouseX + 'px';
     dot.style.top  = mouseY + 'px';
+
+    /* Only hide system cursor after first move */
+    if (!hasMoved) {
+      hasMoved = true;
+      document.body.style.cursor = 'none';
+    }
   });
 
-  // Smooth outer ring via lerp
   function animateCursor() {
     outerX += (mouseX - outerX) * 0.11;
     outerY += (mouseY - outerY) * 0.11;
@@ -286,11 +225,10 @@ sections.forEach(s => sectionObserver.observe(s));
   }
   animateCursor();
 
-  // Hover state — expand ring on interactive elements
   const hoverTargets = [
     'a', 'button', 'input', 'textarea',
     '.chip', '.fact', '.c-card', '.soc-btn',
-    '.proj-card', '.cr-card', '.gh-link', '.nav-hire',
+    '.proj-card', '.cr-card', '.gh-link-sm', '.nav-hire', '.sk-tag',
   ].join(', ');
 
   document.querySelectorAll(hoverTargets).forEach(el => {
@@ -298,29 +236,25 @@ sections.forEach(s => sectionObserver.observe(s));
     el.addEventListener('mouseleave', () => outer.classList.remove('cursor-hover'));
   });
 
-  // Click state — shrink ring on click
   document.addEventListener('mousedown', () => outer.classList.add('cursor-click'));
   document.addEventListener('mouseup',   () => outer.classList.remove('cursor-click'));
 })();
 
 
 /* ────────────────────────────────────────────────────────────
-   9. COUNTER ANIMATION
+   7. COUNTER ANIMATION
    Stats numbers count up from 0 when scrolled into view.
 ────────────────────────────────────────────────────────────── */
 (function () {
   const counters = document.querySelectorAll('.hs-num[data-count]');
   if (!counters.length) return;
 
-  /**
-   * Animates an element's text from 0 to target over duration ms.
-   * Uses an ease-out cubic easing function.
-   */
   function animateCount(el, target, duration = 1500) {
+    if (prefersReducedMotion) { el.textContent = target; return; }
     const start = performance.now();
     function step(now) {
       const t       = Math.min((now - start) / duration, 1);
-      const eased   = 1 - Math.pow(1 - t, 3); // ease-out cubic
+      const eased   = 1 - Math.pow(1 - t, 3);
       el.textContent = Math.round(eased * target);
       if (t < 1) requestAnimationFrame(step);
       else el.textContent = target;
@@ -346,18 +280,17 @@ sections.forEach(s => sectionObserver.observe(s));
 
 
 /* ────────────────────────────────────────────────────────────
-   10. 3D TILT EFFECT
-   Project cards rotate in 3D perspective on mousemove.
-   Disabled on touch devices.
+   8. 3D TILT EFFECT — Project cards
+   Disabled on touch devices and reduced-motion preference.
 ────────────────────────────────────────────────────────────── */
 (function () {
+  if (prefersReducedMotion) return;
   if (window.matchMedia('(hover: none)').matches) return;
 
   document.querySelectorAll('[data-tilt]').forEach(card => {
     let raf;
 
     card.addEventListener('mouseenter', () => {
-      // Remove CSS transition while mouse is moving for smoothness
       card.style.transition = 'box-shadow 0.3s ease';
     });
 
@@ -367,16 +300,16 @@ sections.forEach(s => sectionObserver.observe(s));
         const rect  = card.getBoundingClientRect();
         const cx    = rect.left + rect.width  / 2;
         const cy    = rect.top  + rect.height / 2;
-        const normX = (e.clientX - cx) / (rect.width  / 2); // -1 → 1
-        const normY = (e.clientY - cy) / (rect.height / 2); // -1 → 1
+        const normX = (e.clientX - cx) / (rect.width  / 2);
+        const normY = (e.clientY - cy) / (rect.height / 2);
 
-        const tiltX =  normY * 9;   // degrees around X axis
-        const tiltY = -normX * 9;   // degrees around Y axis
+        const tiltX =  normY * 8;
+        const tiltY = -normX * 8;
 
         card.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(10px)`;
         card.style.boxShadow = `
-          ${-normX * 14}px ${-normY * 14}px 48px rgba(0,0,0,0.45),
-          0 0 48px rgba(124,58,237,0.22)
+          ${-normX * 12}px ${-normY * 12}px 44px rgba(0,0,0,0.45),
+          0 0 48px rgba(124,58,237,0.20)
         `;
       });
     });
@@ -386,7 +319,6 @@ sections.forEach(s => sectionObserver.observe(s));
       card.style.transition = 'transform 0.55s ease, box-shadow 0.55s ease';
       card.style.transform  = '';
       card.style.boxShadow  = '';
-      // Re-enable CSS transitions after reset
       setTimeout(() => { card.style.transition = ''; }, 560);
     });
   });
@@ -394,52 +326,213 @@ sections.forEach(s => sectionObserver.observe(s));
 
 
 /* ────────────────────────────────────────────────────────────
-   11. BACK-TO-TOP BUTTON
-   Shows after scrolling 600px, scrolls to top on click.
+   9. PROJECT CARD SLIDE ANIMATION — pause when off-screen
+   Saves GPU cycles for off-viewport cards.
 ────────────────────────────────────────────────────────────── */
 (function () {
-  const btn = document.getElementById('back-to-top');
-  if (!btn) return;
+  if (prefersReducedMotion) return;
 
-  window.addEventListener('scroll', () => {
-    btn.classList.toggle('visible', window.scrollY > 600);
-  }, { passive: true });
+  const cards = document.querySelectorAll('.proj-card');
+  if (!cards.length) return;
 
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  const slideObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        entry.target.classList.toggle('paused', !entry.isIntersecting);
+      });
+    },
+    { threshold: 0.05 }
+  );
+
+  cards.forEach(card => slideObserver.observe(card));
 })();
 
 
 /* ────────────────────────────────────────────────────────────
-   12. ORBIT SCENE — Mouse-Parallax Tilt
-   The tech orbit tilts gently toward the cursor for depth.
+   10. BACK-TO-TOP BUTTON
+────────────────────────────────────────────────────────────── */
+backToTop?.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+});
+
+
+/* ────────────────────────────────────────────────────────────
+   11. ORBIT SCENE — Mouse-Parallax Tilt
 ────────────────────────────────────────────────────────────── */
 (function () {
+  if (prefersReducedMotion) return;
   if (window.matchMedia('(hover: none)').matches) return;
 
   const scene = document.getElementById('orbit-scene');
   if (!scene) return;
 
-  const MAX_TILT = 14; // degrees
+  const MAX_TILT = 12;
 
   document.addEventListener('mousemove', e => {
-    const rect   = scene.getBoundingClientRect();
-    // Scene centre in viewport space
+    const rect = scene.getBoundingClientRect();
     const cx = rect.left + rect.width  / 2;
     const cy = rect.top  + rect.height / 2;
-    // Normalise: -1 → +1 relative to screen centre
     const nx = (e.clientX - cx) / (window.innerWidth  / 2);
     const ny = (e.clientY - cy) / (window.innerHeight / 2);
 
-    const tiltX = -ny * MAX_TILT;
-    const tiltY =  nx * MAX_TILT;
-
-    scene.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    scene.style.transform = `perspective(900px) rotateX(${-ny * MAX_TILT}deg) rotateY(${nx * MAX_TILT}deg)`;
   });
 
-  // Reset on mouse leave
   document.addEventListener('mouseleave', () => {
     scene.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+  });
+})();
+
+
+/* ────────────────────────────────────────────────────────────
+   12. CANVAS PARTICLE CONSTELLATION
+   Pauses when tab is hidden (Page Visibility API).
+────────────────────────────────────────────────────────────── */
+(function () {
+  if (prefersReducedMotion) return;
+
+  const canvas = document.createElement('canvas');
+  canvas.id = 'ambient-canvas';
+  canvas.setAttribute('aria-hidden', 'true');
+  Object.assign(canvas.style, {
+    position: 'fixed', top: '0', left: '0',
+    width: '100%', height: '100%',
+    zIndex: '0', pointerEvents: 'none',
+  });
+
+  const bgMesh = document.querySelector('.bg-mesh');
+  if (bgMesh) bgMesh.appendChild(canvas);
+  else document.body.prepend(canvas);
+
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  let animFrameId = null;
+  let paused = false;
+
+  function init() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    particles = [];
+    const count = Math.min(Math.floor((W * H) / 16000), 80); /* cap at 80 */
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.4 + 0.4,
+        dx: (Math.random() - 0.5) * 0.20,
+        dy: (Math.random() - 0.5) * 0.20,
+        alpha: Math.random() * 0.38 + 0.10,
+        hue: Math.random() > 0.6 ? 265 : 38,
+      });
+    }
+  }
+
+  function draw() {
+    if (paused) { animFrameId = null; return; }
+
+    ctx.clearRect(0, 0, W, H);
+
+    particles.forEach(p => {
+      p.x = (p.x + p.dx + W) % W;
+      p.y = (p.y + p.dy + H) % H;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${p.hue}, 82%, 72%, ${p.alpha})`;
+      ctx.fill();
+    });
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx   = particles[i].x - particles[j].x;
+        const dy   = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 110) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `hsla(265, 82%, 72%, ${(1 - dist / 110) * 0.10})`;
+          ctx.lineWidth   = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    animFrameId = requestAnimationFrame(draw);
+  }
+
+  /* Pause when tab is hidden */
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      paused = true;
+    } else {
+      paused = false;
+      if (!animFrameId) draw();
+    }
+  });
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(init, 200);
+  }, { passive: true });
+
+  init();
+  draw();
+})();
+
+
+/* ────────────────────────────────────────────────────────────
+   13. CONTACT FORM HANDLER
+   Client-side validation + mailto fallback.
+────────────────────────────────────────────────────────────── */
+(function () {
+  const form   = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  if (!form || !status) return;
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name    = form.querySelector('#cf-name')?.value.trim();
+    const email   = form.querySelector('#cf-email')?.value.trim();
+    const subject = form.querySelector('#cf-subject')?.value.trim();
+    const message = form.querySelector('#cf-msg')?.value.trim();
+
+    /* Basic validation */
+    if (!name || !email || !message) {
+      status.textContent = '⚠ Please fill in your name, email, and message.';
+      status.className   = 'form-status error';
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      status.textContent = '⚠ Please enter a valid email address.';
+      status.className   = 'form-status error';
+      return;
+    }
+
+    /* Build mailto link as fallback (works without a backend) */
+    const mailSubject = subject
+      ? encodeURIComponent(subject)
+      : encodeURIComponent(`Portfolio enquiry from ${name}`);
+    const mailBody = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\n${message}`
+    );
+    const mailTo = `mailto:shamalsathsara4@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+
+    /* Open mail client */
+    window.location.href = mailTo;
+
+    /* Show success feedback */
+    status.textContent = '✅ Opening your email client... If nothing opens, email shamalsathsara4@gmail.com directly.';
+    status.className   = 'form-status success';
+
+    /* Reset form */
+    setTimeout(() => {
+      form.reset();
+      status.textContent = '';
+      status.className   = 'form-status';
+    }, 6000);
   });
 })();
